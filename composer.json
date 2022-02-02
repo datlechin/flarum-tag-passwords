@@ -1,0 +1,54 @@
+{
+    "name": "datlechin/flarum-tag-passwords",
+    "description": "Adds password to protect your Tags.",
+    "keywords": [
+        "flarum"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "require": {
+        "flarum/core": "^1.0.0",
+        "flarum/tags": "*"
+    },
+    "authors": [
+        {
+            "name": "Ngo Quoc dat",
+            "email": "datlechin@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Datlechin\\TagPasswords\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Tag Passwords",
+            "category": "feature",
+            "icon": {
+                "name": "fas fa-lock",
+                "color": "#fff",
+                "backgroundColor": "#D3241C"
+            }
+        },
+        "flarum-cli": {
+            "modules": {
+                "admin": true,
+                "forum": true,
+                "js": true,
+                "jsCommon": false,
+                "css": false,
+                "locale": true,
+                "gitConf": true,
+                "githubActions": true,
+                "prettier": true,
+                "typescript": false,
+                "bundlewatch": false,
+                "backendTesting": false,
+                "editorConfig": true,
+                "styleci": true
+            }
+        }
+    }
+}

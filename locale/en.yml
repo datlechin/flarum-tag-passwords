@@ -1,0 +1,12 @@
+datlechin-tag-passwords:
+  # For more details on the format
+  # Checkout https://docs.flarum.org/extend/i18n.html#appendix-a-standard-key-format
+  admin:
+    edit_tag:
+      password_label: Password
+      password_protected_label: Password-protect this tag
+
+  forum:
+    tag_password_required:
+      title: Password required to view discussions in this tag
+      button_submit: Unlock
