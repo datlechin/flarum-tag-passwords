@@ -7,7 +7,6 @@ export default class TagGroupRequired extends Component {
   oninit(vnode) {
     super.oninit(vnode);
 
-    this.group = Stream('');
     this.loading = false;
     this.invalid = false;
 

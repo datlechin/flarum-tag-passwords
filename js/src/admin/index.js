@@ -4,6 +4,10 @@ import Tag from 'flarum/tags/models/Tag';
 import Model from 'flarum/common/Model';
 import EditTagModal from 'flarum/tags/components/EditTagModal';
 import Stream from 'flarum/utils/Stream';
+import icon from 'flarum/common/helpers/icon';
+import Button from 'flarum/common/components/Button';
+import Dropdown from 'flarum/common/components/Dropdown';
+import Group from 'flarum/common/models/Group';
 
 app.initializers.add('datlechin/flarum-tag-passwords', () => {
   app.extensionData
@@ -28,13 +32,13 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
   Tag.prototype.isPasswordProtected = Model.attribute('isPasswordProtected');
   Tag.prototype.isGroupProtected = Model.attribute('isGroupProtected');
   Tag.prototype.password = Model.attribute('password');
-  Tag.prototype.group = Model.attribute('group');
+  Tag.prototype.protectedGroupIds = Model.attribute('protectedGroupIds');
 
   extend(EditTagModal.prototype, 'oninit', function () {
     this.isPasswordProtected = Stream(this.tag.password() || false);
     this.password = Stream(this.tag.password() || '');
-    this.isGroupProtected = Stream(this.tag.group() || false);
-    this.group = Stream(this.tag.group() || '');
+    this.isGroupProtected = Stream(this.tag.protectedGroupIds() || false);
+    this.protectedGroupIds = this.tag.protectedGroupIds() != null? this.tag.protectedGroupIds().split(","): [];
   });
 
   extend(EditTagModal.prototype, 'fields', function (items) {
@@ -61,15 +65,50 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
             ) : (
               ''
             )}
-            {this.isGroupProtected() && !this.isPasswordProtected() ? (
-            <input
-              className="FormControl"
-              bidi={this.group}
-              placeholder={app.translator.trans('datlechin-tag-passwords.admin.edit_tag.group_placeholder_label')}
-            />
-          ) : (
-            ''
-          )}
+
+            {this.isGroupProtected() && !this.isPasswordProtected() ?
+              m('table.GroupListTable', m('tbody', [
+        this.protectedGroupIds === null ? m('tr', m('td', LoadingIndicator.component())) : this.protectedGroupIds.map((item, index) => m('tr', [
+              m('td', app.store.all('groups').filter(group => group.id() == Number(item)).map(group => group.namePlural())),
+              m('td', m('button.Button.Button--danger', {
+                  onclick: event => {
+                      event.preventDefault(); // Do not close the settings modal
+                      this.protectedGroupIds.splice(index, 1);
+                      m.redraw();
+                  },
+              }, icon('fas fa-times'))),
+          ])),
+          m('tr', m('td', {
+              colspan: 5,
+          }, Dropdown.component({
+              label: app.translator.trans('datlechin-tag-passwords.admin.edit_tag.select_group'),
+              buttonClassName: 'Button',
+          }, app.store.all('groups')
+              .filter(group => {
+                  if (group.id() === Group.MEMBER_ID || group.id() === Group.GUEST_ID) {
+                      // Do not suggest "virtual" groups
+                      return false;
+                  }
+
+                  // Do not suggest groups already in use
+                  var isFound = false;
+                  if (Array.isArray(this.protectedGroupIds)) {
+                    this.protectedGroupIds.forEach((groupId) => {
+                      if (groupId == group.id()) {
+                        isFound = true;
+                      }
+                    });
+                  }
+                  return !isFound;
+              })
+              .map(group => Button.component({
+                  onclick: () => {
+                    this.protectedGroupIds.push(group.id());
+                    m.redraw();
+                  },
+              }, group.namePlural()))))),
+            ]))
+            :''}
           </div>
         </div>
     )
@@ -77,6 +116,6 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
 
   extend(EditTagModal.prototype, 'submitData', function (data) {
     data.password = this.isPasswordProtected() ? this.password() : null;
-    data.group = this.isGroupProtected() ? this.group() : null;
+    data.protected_group_ids = this.isGroupProtected() && this.protectedGroupIds.length > 0 ? this.protectedGroupIds.toString() : null;
   });
 });

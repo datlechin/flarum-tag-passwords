@@ -10,8 +10,9 @@ datlechin-tag-passwords:
       protected_label: Assign Protection Type
       password_protected_label: Password-protect this tag
       password_placeholder_label: Password
-      group_protected_label: Group Permission with Singular Name
+      group_protected_label: Group Permission
       group_placeholder_label: Group name
+      select_group: Select Permission Group
   forum:
     tag_password_required:
       title: Password required to view discussions in this tag

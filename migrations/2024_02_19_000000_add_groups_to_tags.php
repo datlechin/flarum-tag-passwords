@@ -9,12 +9,12 @@ use Illuminate\Database\Schema\Builder;
 return [
     'up' => function (Builder $schema) {
         $schema->table('tags', function (Blueprint $table) {
-            $table->string('group')->nullable();
+            $table->string('protected_group_ids')->nullable();
         });
     },
     'down' => function (Builder $schema) {
         $schema->table('tags', function (Blueprint $table) {
-            $table->dropColumn('group');
+            $table->dropColumn('protected_group_ids');
         });
     }
 ];

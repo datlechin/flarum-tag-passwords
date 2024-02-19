@@ -30,11 +30,11 @@ class AddTagAttributes
         $attributes['isLockedIconDisplayed'] = $this->settings->get('flarum-tag-passwords.display_unlock_icon');
         $attributes['isProtectedTagDisplayedForTagsPage'] = $this->settings->get('flarum-tag-passwords.display_protected_tag_from_tags_page');
         $attributes['isPasswordProtected'] = (bool) $tag->password;
-        $attributes['isGroupProtected'] = (bool) $tag->group;
+        $attributes['isGroupProtected'] = (bool) $tag->protected_group_ids;
         $attributes['isUnlocked'] = (bool) $state->is_unlocked;
         if ($actor->isAdmin()) {
             $attributes['password'] = $tag->password;
-            $attributes['group'] = $tag->group;
+            $attributes['protectedGroupIds'] = $tag->protected_group_ids;
         }
 
         return $attributes;

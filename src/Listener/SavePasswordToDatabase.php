@@ -17,6 +17,6 @@ class SavePasswordToDatabase
         $attributes = Arr::get($data, 'attributes', []);
 
         $tag->password = Arr::get($attributes, 'password', null);
-        $tag->group = Arr::get($attributes, 'group', null);
+        $tag->protected_group_ids = Arr::get($attributes, 'protected_group_ids', null);
     }
 }
