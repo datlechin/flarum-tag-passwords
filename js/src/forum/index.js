@@ -81,28 +81,32 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
       if (tag.isGroupProtected() || tag.isPasswordProtected()) {
         if (tag.isUnlocked()) {
           return original(...args);
-         } else if (tag.isProtectedTagDisplayedForTagsPage() == true) {
+        } else if (tag.isProtectedTagDisplayedForTagsPage() == true) {
           const children = sortTags(tag.children() || []);
-  
+
           return (
             <li className={classList('TagTile', { colored: tag.color() }, textContrastClass(tag.color()))} style={{ '--tag-bg': tag.color() }}>
               <Link className="TagTile-info" href={app.route.tag(tag)}>
                 {tag.icon() && tagIcon(tag, {}, { useColor: false })}
-                {tag.isGroupProtected()? <div class="TagsPageGroupProtection"></div>: <div class="TagsPagePasswordProtection"></div>}
+                {tag.isGroupProtected() ? <div class="TagsPageGroupProtection"></div> : <div class="TagsPagePasswordProtection"></div>}
                 <h3 className="TagTile-name">{tag.name()}</h3>
-               
+
                 <p className="TagTile-description">{tag.description()}</p>
                 {!!children && (
                   <div className="TagTile-children">{children.map((child) => [<Link href={app.route.tag(child)}>{child.name()}</Link>, ' '])}</div>
                 )}
               </Link>
-  
+
               <span className="TagTile-lastPostedDiscussion">
-                {
-                  tag.isGroupProtected()?
-                  ( <div>{icon('fas fa-user-lock')} {app.translator.trans('datlechin-tag-passwords.forum.tags_page.group_protected')}</div>):
-                  ( <div>{icon('fas fa-lock')} {app.translator.trans('datlechin-tag-passwords.forum.tags_page.password_protected')}</div>)
-                }
+                {tag.isGroupProtected() ? (
+                  <div>
+                    {icon('fas fa-user-lock')} {app.translator.trans('datlechin-tag-passwords.forum.tags_page.group_protected')}
+                  </div>
+                ) : (
+                  <div>
+                    {icon('fas fa-lock')} {app.translator.trans('datlechin-tag-passwords.forum.tags_page.password_protected')}
+                  </div>
+                )}
               </span>
             </li>
           );
