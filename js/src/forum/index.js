@@ -14,7 +14,6 @@ import sortTags from 'flarum/tags/common/utils/sortTags';
 import classList from 'flarum/common/utils/classList';
 import textContrastClass from 'flarum/common/helpers/textContrastClass';
 import Link from 'flarum/common/components/Link';
-import humanTime from 'flarum/common/helpers/humanTime';
 
 app.initializers.add('datlechin/flarum-tag-passwords', () => {
   Tag.prototype.isPasswordProtected = Model.attribute('isPasswordProtected');

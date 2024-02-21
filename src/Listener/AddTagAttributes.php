@@ -32,6 +32,7 @@ class AddTagAttributes
         $attributes['isPasswordProtected'] = (bool) $tag->password;
         $attributes['isGroupProtected'] = (bool) $tag->protected_groups;
         $attributes['isUnlocked'] = (bool) $state->is_unlocked;
+
         if ($actor->isAdmin()) {
             $attributes['password'] = $tag->password;
             $attributes['protectedGroups'] = $tag->protected_groups;

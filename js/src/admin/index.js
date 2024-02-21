@@ -64,85 +64,79 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
             ''
           )}
 
-          {this.isGroupProtected() && !this.isPasswordProtected()
-            ? m(
-                'table.GroupListTable',
-                m('tbody', [
-                  this.protectedGroups === null
-                    ? m('tr', m('td', LoadingIndicator.component()))
-                    : this.protectedGroups.map((item, index) =>
-                        m('tr', [
-                          m(
-                            'td',
-                            app.store
-                              .all('groups')
-                              .filter((group) => group.id() == item.id)
-                              .map((group) => group.namePlural())
-                          ),
-                          m(
-                            'td',
-                            m(
-                              'button.Button.Button--danger',
-                              {
-                                onclick: (event) => {
-                                  event.preventDefault(); // Do not close the settings modal
-                                  this.protectedGroups.splice(index, 1);
-                                  m.redraw();
-                                },
-                              },
-                              icon('fas fa-times')
-                            )
-                          ),
-                        ])
-                      ),
-                  m(
-                    'tr',
-                    m(
-                      'td',
-                      {
-                        colspan: 5,
-                      },
-                      Dropdown.component(
-                        {
-                          label: app.translator.trans('datlechin-tag-passwords.admin.edit_tag.select_group'),
-                          buttonClassName: 'Button',
-                        },
-                        app.store
+          {this.isGroupProtected() && !this.isPasswordProtected() ? (
+            <table className="GroupListTable">
+              <tbody>
+                {this.protectedGroups === null ? (
+                  <tr>
+                    <td>
+                      <LoadingIndicator />
+                    </td>
+                  </tr>
+                ) : (
+                  this.protectedGroups.map((item, index) => (
+                    <tr>
+                      <td>
+                        {app.store
                           .all('groups')
-                          .filter((group) => {
-                            if (group.id() === Group.MEMBER_ID || group.id() === Group.GUEST_ID) {
-                              // Do not suggest "virtual" groups
-                              return false;
-                            }
+                          .filter((group) => group.id() == item.id)
+                          .map((group) => group.namePlural())}
+                      </td>
+                      <td>
+                        <button
+                          className="Button Button--danger"
+                          onclick={(event) => {
+                            event.preventDefault(); // Do not close the settings modal
+                            this.protectedGroups.splice(index, 1);
+                            m.redraw();
+                          }}
+                        >
+                          {icon('fas fa-times')}
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+                <tr>
+                  <td colspan="5">
+                    <Dropdown label={app.translator.trans('datlechin-tag-passwords.admin.edit_tag.select_group')} buttonClassName="Button">
+                      {app.store
+                        .all('groups')
+                        .filter((group) => {
+                          if (group.id() === Group.MEMBER_ID || group.id() === Group.GUEST_ID) {
+                            // Do not suggest "virtual" groups
+                            return false;
+                          }
 
-                            // Do not suggest groups already in use
-                            var isFound = false;
-                            if (Array.isArray(this.protectedGroups)) {
-                              this.protectedGroups.forEach((protectedGroup) => {
-                                if (protectedGroup.id == group.id()) {
-                                  isFound = true;
-                                }
-                              });
-                            }
-                            return !isFound;
-                          })
-                          .map((group) =>
-                            Button.component(
-                              {
-                                onclick: () => {
-                                  this.protectedGroups.push({ id: Number(group.id()) });
-                                  m.redraw();
-                                },
-                              },
-                              group.namePlural()
-                            )
-                          )
-                      )
-                    )
-                  ),
-                ])
-              )
-            : ''}
+                          // Do not suggest groups already in use
+                          var isFound = false;
+                          if (Array.isArray(this.protectedGroups)) {
+                            this.protectedGroups.forEach((protectedGroup) => {
+                              if (protectedGroup.id == group.id()) {
+                                isFound = true;
+                              }
+                            });
+                          }
+                          return !isFound;
+                        })
+                        .map((group) => (
+                          <Button
+                            onclick={() => {
+                              this.protectedGroups.push({ id: Number(group.id()) });
+                              m.redraw();
+                            }}
+                          >
+                            {group.namePlural()}
+                          </Button>
+                        ))}
+                    </Dropdown>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     );

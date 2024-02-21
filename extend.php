@@ -41,4 +41,9 @@ return [
 
     (new Extend\ModelVisibility(Discussion::class))
         ->scopeAll(ScopeDiscussionVisibilityForAbility::class),
+
+    (new Extend\Settings())
+        ->default('flarum-tag-passwords.display_unlock_icon', true)
+        ->default('flarum-tag-passwords.display_protected_tag_from_sidebar', true)
+        ->default('flarum-tag-passwords.display_protected_tag_from_tags_page', true),
 ];
