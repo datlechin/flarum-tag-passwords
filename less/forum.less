@@ -24,9 +24,83 @@
   }
 }
 
+.TagGroupRequired {
+  text-align: center;
+
+  h3 {
+    color: @muted-more-color;
+    font-weight: normal;
+
+    &:before {
+      .fa();
+      content: @fa-var-user-lock ;
+      display: block;
+      font-size: 80px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .FormControl {
+    width: 200px;
+    display: inline;
+
+    &.invalid {
+      animation: shake .5s linear;
+    }
+  }
+}
+
 .TagLinkButton {
   .fa-lock {
     margin-left: 10px;
+  }
+  .fa-unlock {
+    margin-left: 10px;
+  }
+  .fa-user-lock {
+    margin-left: 10px;
+  }
+}
+
+.hiddenTag {
+  visibility: hidden;
+  display: none;
+  max-height: 0;
+}
+
+.TagsPagePasswordProtection {
+  text-align: center;
+
+  &:before {
+    .fa();
+    content: @fa-var-lock ;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    font-size: 80px;
+    display: flex;
+    opacity: 0.3;
+    color: black;
+  }
+}
+
+.TagsPageGroupProtection {
+  text-align: center;
+
+  &:before {
+    .fa();
+    content: @fa-var-user-lock ;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    font-size: 80px;
+    display: flex;
+    opacity: 0.3;
+    color: black;
   }
 }
 
