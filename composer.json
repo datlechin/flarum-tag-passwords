@@ -2,21 +2,28 @@
     "name": "datlechin/flarum-tag-passwords",
     "description": "Adds password to protect your Tags.",
     "keywords": [
-        "flarum"
+        "flarum",
+        "tags",
+        "protect tags",
+        "password"
     ],
     "type": "flarum-extension",
     "license": "MIT",
     "require": {
-        "flarum/core": "^1.0.0",
+        "flarum/core": "^v1.8",
         "flarum/tags": "*"
     },
     "authors": [
         {
-            "name": "Ngo Quoc dat",
+            "name": "Ngo Quoc Dat",
             "email": "datlechin@gmail.com",
             "role": "Developer"
         }
     ],
+    "support": {
+        "source": "https://github.com/datlechin/flarum-link-preview",
+        "forum": "https://discuss.flarum.org/d/30014"
+    },
     "autoload": {
         "psr-4": {
             "Datlechin\\TagPasswords\\": "src/"
