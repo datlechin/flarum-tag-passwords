@@ -1,19 +1,18 @@
 {
-    "name": "@datlechin/flarum-tag-passwords",
-    "private": true,
-    "devDependencies": {
-        "@flarum/prettier-config": "^1.0.0",
-        "flarum-webpack-config": "^2.0.2",
-        "prettier": "^2.8.8",
-        "webpack": "^5.90.3",
-        "webpack-cli": "^4.10.0"
-    },
-    "scripts": {
-        "dev": "webpack --mode development --watch",
-        "build": "webpack --mode production",
-        "analyze": "cross-env ANALYZER=true yarn build",
-        "format": "prettier --write src",
-        "format-check": "prettier --check src"
-    },
-    "prettier": "@flarum/prettier-config"
+  "name": "@datlechin/flarum-tag-passwords",
+  "private": true,
+  "devDependencies": {
+    "@flarum/prettier-config": "^1.0.0",
+    "flarum-webpack-config": "^2.0.2",
+    "prettier": "^2.8.8",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^4.10.0"
+  },
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production",
+    "format": "prettier --write src",
+    "format-check": "prettier --check src"
+  },
+  "prettier": "@flarum/prettier-config"
 }
