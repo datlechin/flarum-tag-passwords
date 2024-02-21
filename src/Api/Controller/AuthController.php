@@ -44,8 +44,8 @@ class AuthController extends AbstractCreateController
         if ($tag->password && $tag->password !== $data['password']) {
             throw new Exception('Password is incorrect');
         }
-        if ($tag->protected_group_ids) {
-            if (!$this->hasGroup($actor, explode(",",$tag->protected_group_ids))) {
+        if ($tag->protected_groups) {
+            if (!$this->hasGroup($actor, json_decode($tag->protected_groups))) {
                 throw new Exception('Access Denied for Tag Access "'.$tag->name.'".');
             }
         }
@@ -59,11 +59,11 @@ class AuthController extends AbstractCreateController
     /**
     * Check whether the user has a permission that is based on their groups.
     */
-    public function hasGroup(User $actor, Array $matches): bool
+    public function hasGroup(User $actor, Array $protectedGroups): bool
     {
        foreach ($actor->groups as $id=>$permissionGroup) {
-            foreach ($matches as &$match) {
-                if ($permissionGroup->id === (int)$match) {
+            foreach ($protectedGroups as &$protectedGroup) {
+                if ($permissionGroup->id === (int)$protectedGroup->id) {
                     return true;
                 }
             }
