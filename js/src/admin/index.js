@@ -26,7 +26,18 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
       setting: 'flarum-tag-passwords.display_protected_tag_from_tags_page',
       label: app.translator.trans('datlechin-tag-passwords.admin.setting.display_protected_tag_from_tags_page'),
       type: 'switch',
-    });
+    })
+    .registerSetting(() => <legend class="tag-passwords-legend">{app.translator.trans('datlechin-tag-passwords.admin.setting.heading.discussion')}</legend>)
+    .registerSetting({
+      setting: 'flarum-tag-passwords.display_protected_tag_from_discussion_list',
+      label: app.translator.trans('datlechin-tag-passwords.admin.setting.display_protected_tag_from_discussion_list'),
+      type: 'switch',
+    })
+    .registerSetting({
+      setting: 'flarum-tag-passwords.display_discussion_avator',
+      label: app.translator.trans('datlechin-tag-passwords.admin.setting.discussion.avatar'),
+      type: 'switch',
+    })
 
   Tag.prototype.isPasswordProtected = Model.attribute('isPasswordProtected');
   Tag.prototype.isGroupProtected = Model.attribute('isGroupProtected');
