@@ -71,15 +71,15 @@ export default class TagProtectedDiscussionListItem extends DiscussionListItem {
     const isProtectedPasswordTags = discussion.protectedPasswordTags().length > 0;
     const isProtectedGroupPermissionTags = discussion.protectedGroupPermissionTags().length > 0;
     if (isProtectedPasswordTags && !isProtectedGroupPermissionTags) {
-      return <Link className="DiscussionListItem-main">
+      return <Link className="DiscussionListItem-main" href="#">
         {getTooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.discussion_list.title.password_protected'), app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.password_protected'), isProtectedPasswordTags, isProtectedGroupPermissionTags)}
       </Link>
     } else if (!isProtectedPasswordTags && isProtectedGroupPermissionTags) {
-      return <Link className="DiscussionListItem-main">
+      return <Link className="DiscussionListItem-main" href="#">
         {getTooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.discussion_list.title.group_protected'), app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.group_protected'), isProtectedPasswordTags, isProtectedGroupPermissionTags)}
       </Link>
     } else {
-      return <Link className="DiscussionListItem-main">
+      return <Link className="DiscussionListItem-main" href="#">
         {getTooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.discussion_list.title.multiple'), app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.multiple'), isProtectedPasswordTags, isProtectedGroupPermissionTags)}
       </Link>
     }
@@ -105,7 +105,7 @@ export default class TagProtectedDiscussionListItem extends DiscussionListItem {
           text={app.translator.trans('core.forum.discussion_list.started_text', {ago: humanTime(discussion.createdAt()) })}
           position="right"
         >
-          <Link className="DiscussionListItem-author">
+          <Link className="DiscussionListItem-author" href="#">
             <span class="Avatar" loading="lazy">
             {icon('fas fa-question')}
             </span>
