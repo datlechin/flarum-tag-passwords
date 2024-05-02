@@ -35,28 +35,29 @@ export default function tagLabel(tag, attrs = {}, showProtectedDisplayed = true,
   if (tag.isPasswordProtected() || tag.isGroupProtected()) {
     if (tag.isUnlocked()) {
       if (!isNonProtectedDisplayed) {
-        return <></>
+        return <></>;
       } else if (tag.isLockedIconDisplayed()) {
-        iconObject = icon('fas fa-unlock', {style: {fontSize: '13px', float: 'none'}});
+        iconObject = icon('fas fa-unlock', { style: { fontSize: '13px', float: 'none' } });
       }
     } else if (showProtectedDisplayed) {
       if (tag.isPasswordProtected()) {
-        iconObject = icon('fas fa-lock', {style: {fontSize: '13px', float: 'none'}});
+        iconObject = icon('fas fa-lock', { style: { fontSize: '13px', float: 'none' } });
       } else {
-        iconObject = icon('fas fa-user-lock', {style: {fontSize: '13px', float: 'none'}});
+        iconObject = icon('fas fa-user-lock', { style: { fontSize: '13px', float: 'none' } });
       }
     } else {
-      return <></>
+      return <></>;
     }
   } else if (!isNonProtectedDisplayed) {
-    return <></>
+    return <></>;
   }
   return m(
     link ? Link : 'span',
     attrs,
     <span className="TagLabel-text">
       {tag && tag.icon() && tagIcon(tag, { className: 'TagLabel-icon' }, { useColor: false })}
-      <span className="TagLabel-name">{tagText + (iconObject? ' ': '')}
+      <span className="TagLabel-name">
+        {tagText + (iconObject ? ' ' : '')}
         {iconObject || null}
       </span>
     </span>

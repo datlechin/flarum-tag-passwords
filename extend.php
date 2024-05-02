@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of datlechin/flarum-tag-passwords.
- *
- * Copyright (c) 2022 Ngo Quoc dat.
- *
- * For the full copyright and license information, please view the LICENSE.md
- * file that was distributed with this source code.
- */
-
 namespace Datlechin\TagPasswords;
 
 use Datlechin\TagPasswords\Access\ScopeDiscussionVisibilityForAbility;
@@ -52,7 +43,7 @@ return [
         ->default('flarum-tag-passwords.display_protected_tag_from_sidebar', true)
         ->default('flarum-tag-passwords.display_protected_tag_from_tags_page', true)
         ->default('flarum-tag-passwords.display_protected_tag_from_discussion_list', false)
-        ->default('flarum-tag-passwords.display_discussion_avator', false)
+        ->default('flarum-tag-passwords.display_discussion_avatar', false)
         ->serializeToForum('flarum-tag-passwords.displayProtectedTagForDiscussionList', 'flarum-tag-passwords.display_protected_tag_from_discussion_list', 'boolval', false)
-        ->serializeToForum('flarum-tag-passwords.displayDiscussionAvator', 'flarum-tag-passwords.display_discussion_avator', 'boolval', false)
+        ->serializeToForum('flarum-tag-passwords.displayDiscussionAvatar', 'flarum-tag-passwords.display_discussion_avatar', 'boolval', false),
 ];

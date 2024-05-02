@@ -2,7 +2,7 @@ import tagLabel from './tagLabel';
 import sortTags from 'flarum/tags/common/utils/sortTags';
 import classList from 'flarum/common/utils/classList';
 
-export default function tagsLabel(tags, attrs = {},  isProtectedDisplayed = true, isNonProtectedDisplayed = true) {
+export default function tagsLabel(tags, attrs = {}, isProtectedDisplayed = true, isNonProtectedDisplayed = true) {
   const children = [];
   const { link, ...otherAttrs } = attrs;
 
