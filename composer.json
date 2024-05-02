@@ -21,7 +21,7 @@
         }
     ],
     "support": {
-        "source": "https://github.com/datlechin/flarum-link-preview",
+        "source": "https://github.com/datlechin/flarum-tag-passwords",
         "forum": "https://discuss.flarum.org/d/30014"
     },
     "autoload": {
