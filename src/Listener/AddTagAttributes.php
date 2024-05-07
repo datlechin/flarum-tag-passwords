@@ -25,13 +25,28 @@ class AddTagAttributes
     {
         $actor = $serializer->getActor();
 
-        $state = $tag->stateFor($actor);
-        $attributes['isProtectedTagDisplayedForSidebar'] = (bool) $this->settings->get('flarum-tag-passwords.display_protected_tag_from_sidebar');
-        $attributes['isLockedIconDisplayed'] = (bool) $this->settings->get('flarum-tag-passwords.display_unlock_icon');
-        $attributes['isProtectedTagDisplayedForTagsPage'] = (bool) $this->settings->get('flarum-tag-passwords.display_protected_tag_from_tags_page');
-        $attributes['isPasswordProtected'] = (bool) $tag->password;
-        $attributes['isGroupProtected'] = (bool) $tag->protected_groups;
-        $attributes['isUnlocked'] = (bool) $state->is_unlocked;
+        $isUnlocked = true;
+        $isPasswordProtected = (bool) $tag->password;
+        $isGroupProtected = (bool) $tag->protected_groups;
+        // Avoid checking for is_unlock all the time
+        if ($isPasswordProtected || $isGroupProtected) {
+            $state = $tag->stateFor($actor);
+            $isUnlocked = (bool) $state->is_unlocked;
+        }
+        $isProtectedTagDisplayedForSidebar = false;
+        $isLockedIconDisplayed = false;
+        $isProtectedTagDisplayedForTagsPage = false;
+        if(!$isUnlocked) {
+            $isProtectedTagDisplayedForSidebar = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_sidebar');
+            $isLockedIconDisplayed = $actor->hasPermission('flarum-tag-passwords.display_unlock_icon');
+            $isProtectedTagDisplayedForTagsPage = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_tags_page');
+        }
+        $attributes['isProtectedTagDisplayedForSidebar'] = $isProtectedTagDisplayedForSidebar;
+        $attributes['isLockedIconDisplayed'] = $isLockedIconDisplayed;
+        $attributes['isProtectedTagDisplayedForTagsPage'] = $isProtectedTagDisplayedForTagsPage;
+        $attributes['isPasswordProtected'] = $isPasswordProtected;
+        $attributes['isGroupProtected'] = $isGroupProtected;
+        $attributes['isUnlocked'] = $isUnlocked ;
 
         if ($actor->isAdmin()) {
             $attributes['password'] = $tag->password;

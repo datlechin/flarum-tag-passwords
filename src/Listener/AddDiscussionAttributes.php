@@ -2,7 +2,7 @@
 
 namespace Datlechin\TagPasswords\Listener;
 
-use Flarum\Api\Serializer\DiscussionSerializer;
+use Flarum\Api\Serializer\BasicDiscussionSerializer;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\Discussion\Discussion;
 use Flarum\Tags\Tag;
@@ -17,15 +17,15 @@ class AddDiscussionAttributes
     }
 
     /**
-     * @param DiscussionSerializer $serializer
+     * @param BasicDiscussionSerializer $serializer
      * @param Discussion $discussion
      * @param array $attributes
      * @return array
      */
-    public function __invoke(DiscussionSerializer $serializer, Discussion $discussion, array $attributes): array
+    public function __invoke(BasicDiscussionSerializer $serializer, Discussion $discussion, array $attributes): array
     {
         $actor = $serializer->getActor();
-        $state = $discussion->stateFor($actor);
+
         $protectedPasswordTags = [];
         $protectedGroupPermissionTags = [];
         foreach ($discussion->tags as &$tag) {
@@ -44,9 +44,19 @@ class AddDiscussionAttributes
                 }
             }
         }
+        $totalProtectedTags = count($protectedPasswordTags) + count($protectedGroupPermissionTags);
         $attributes['protectedPasswordTags'] = $protectedPasswordTags;
         $attributes['protectedGroupPermissionTags'] = $protectedGroupPermissionTags;
-        $attributes['numberOfProtectedTags'] = count($protectedPasswordTags) + count($protectedGroupPermissionTags);
+        $attributes['numberOfProtectedTags'] = $totalProtectedTags;
+
+        $displayProtectedTagForDiscussionList = false;
+        $displayDiscussionAvator = false;
+        if($totalProtectedTags > 0) {
+            $displayProtectedTagForDiscussionList = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_discussion_list');
+            $displayDiscussionAvator = $actor->hasPermission('flarum-tag-passwords.display_discussion_avator');
+        }
+        $attributes['displayProtectedTagForDiscussionList'] = $displayProtectedTagForDiscussionList;
+        $attributes['displayDiscussionAvator'] = $displayDiscussionAvator;
         return $attributes;
     }
 }

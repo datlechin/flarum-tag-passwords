@@ -11,6 +11,7 @@ use Flarum\Discussion\Discussion;
 use Flarum\Extend;
 use Flarum\Tags\Api\Serializer\TagSerializer;
 use Flarum\Api\Serializer\DiscussionSerializer;
+use Flarum\Api\Serializer\BasicDiscussionSerializer;
 use Flarum\Tags\Event\Saving;
 
 return [
@@ -29,7 +30,7 @@ return [
     (new Extend\ApiSerializer(TagSerializer::class))
         ->attributes(AddTagAttributes::class),
 
-    (new Extend\ApiSerializer(DiscussionSerializer::class))
+    (new Extend\ApiSerializer(BasicDiscussionSerializer::class))
         ->attributes(AddDiscussionAttributes::class),
 
     (new Extend\Routes('api'))
@@ -43,7 +44,5 @@ return [
         ->default('flarum-tag-passwords.display_protected_tag_from_sidebar', true)
         ->default('flarum-tag-passwords.display_protected_tag_from_tags_page', true)
         ->default('flarum-tag-passwords.display_protected_tag_from_discussion_list', false)
-        ->default('flarum-tag-passwords.display_discussion_avatar', false)
-        ->serializeToForum('flarum-tag-passwords.displayProtectedTagForDiscussionList', 'flarum-tag-passwords.display_protected_tag_from_discussion_list', 'boolval', false)
-        ->serializeToForum('flarum-tag-passwords.displayDiscussionAvatar', 'flarum-tag-passwords.display_discussion_avatar', 'boolval', false),
+        ->default('flarum-tag-passwords.display_discussion_avator', false)
 ];
