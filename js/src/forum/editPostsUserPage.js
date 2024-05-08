@@ -9,13 +9,13 @@ import PostsUserPage from 'flarum/forum/components/PostsUserPage';
 import CommentPost from 'flarum/forum/components/CommentPost';
 import TagProtectedCommentPost from './components/TagProtectedCommentPost';
 import tagsLabel from '../common/helpers/tagsLabel';
-
+import ProtectedTag from '../common/models/ProtectedTag';
 
 export default function () {
   function processProtectedTagsForPost(protectedTags,) {
     let collection = [];
     for (let i = 0; i < protectedTags.length; i++) {
-      let foundTag = new Tag();
+      let foundTag = new ProtectedTag();
       foundTag.pushAttributes(protectedTags[i]);
       collection.push(foundTag);
     }
@@ -53,7 +53,7 @@ export default function () {
             if (discussion.numberOfProtectedTags() > 0) {
               if (discussion.isProtectedTagDisplayedForPostList()) {
                 const tags = processProtectedTagsForPost(discussion.protectedPasswordTags().concat(discussion.protectedGroupPermissionTags()));
-                //const tags = processProtectedTagsForPost(discussion.tags());
+
                 return (
                   <li>
                     <div className="PostsUserPage-discussion">{tagsLabel(tags, {}, true, false)}
