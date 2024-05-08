@@ -33,7 +33,7 @@ export default class TagProtectedDiscussionListItem extends DiscussionListItem {
     const controls = DiscussionControls.controls(discussion, this).toArray();
     const attrs = this.elementAttrs();
     // Check whether admin wish to display protected discussion within the discussion list
-    if (discussion.displayProtectedTagForDiscussionList()) {
+    if (discussion.isProtectedTagDisplayedForDiscussionList()) {
       return (
         <div {...attrs}>
           {this.contentView()}
@@ -87,7 +87,7 @@ export default class TagProtectedDiscussionListItem extends DiscussionListItem {
 
   authorAvatarView() {
     const discussion = this.attrs.discussion;
-    if (discussion.displayDiscussionAvator()) {
+    if (discussion.isProtectedTagDisplayedForDiscussionAvator()) {
       const user = discussion.user();
       return (
         <Tooltip

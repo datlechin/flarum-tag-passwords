@@ -42,6 +42,12 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
         label: app.translator.trans('datlechin-tag-passwords.admin.setting.discussion.avatar'),
         allowGuest: true
     }, 'view')
+    .registerPermission({
+      permission: 'flarum-tag-passwords.display_protected_tag_from_post_list',
+      icon: 'fas fa-pen-square',
+      label: app.translator.trans('datlechin-tag-passwords.admin.setting.display_protected_tag_from_post_list'),
+      allowGuest: true
+    }, 'view')
 
   Tag.prototype.isPasswordProtected = Model.attribute('isPasswordProtected');
   Tag.prototype.isGroupProtected = Model.attribute('isGroupProtected');

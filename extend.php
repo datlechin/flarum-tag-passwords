@@ -45,4 +45,5 @@ return [
         ->default('flarum-tag-passwords.display_protected_tag_from_tags_page', true)
         ->default('flarum-tag-passwords.display_protected_tag_from_discussion_list', false)
         ->default('flarum-tag-passwords.display_discussion_avator', false)
+        ->default('flarum-tag-passwords.display_protected_tag_from_post_list', false)
 ];

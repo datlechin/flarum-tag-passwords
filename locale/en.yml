@@ -7,6 +7,7 @@ datlechin-tag-passwords:
       display_protected_tag_from_sidebar: Display Protected Tag in sidebar navigation
       display_protected_tag_from_tags_page: Display Protected Tag in Tags page navigation
       display_protected_tag_from_discussion_list: Display Protected Tag in Discussion List, with Protection Summary
+      display_protected_tag_from_post_list: Display Protected Tag in Post List, with Protection Summary
       heading:
         discussion: Discussion List Display
       discussion:
