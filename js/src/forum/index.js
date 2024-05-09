@@ -2,12 +2,14 @@ import app from 'flarum/forum/app';
 import Tag from 'flarum/tags/models/Tag';
 import Model from 'flarum/common/Model';
 import Discussion from 'flarum/common/models/Discussion';
+import Post from 'flarum/common/models/Post';
 import editTagsPage from './editTagsPage';
 import editPostsUserPage from './editPostsUserPage';
 import editDiscussionList from './editDiscussionList';
 import editIndexPage from './editIndexPage';
 
 app.initializers.add('datlechin/flarum-tag-passwords', () => {
+  Post.prototype.isUnlocked = Model.attribute('isUnlocked');
   Tag.prototype.isPasswordProtected = Model.attribute('isPasswordProtected');
   Tag.prototype.isGroupProtected = Model.attribute('isGroupProtected');
   Tag.prototype.isUnlocked = Model.attribute('isUnlocked');
@@ -21,7 +23,7 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
   Discussion.prototype.isProtectedTagDisplayedForDiscussionList = Model.attribute('isProtectedTagDisplayedForDiscussionList');
   Discussion.prototype.isProtectedTagDisplayedForDiscussionAvator = Model.attribute('isProtectedTagDisplayedForDiscussionAvator');
   Discussion.prototype.isProtectedTagDisplayedForPostList = Model.attribute('isProtectedTagDisplayedForPostList');
-
+  Discussion.prototype.isProtectedTagDisplayedForDiscussion = Model.attribute('isProtectedTagDisplayedForDiscussion');
   editDiscussionList();
   editTagsPage();
   editPostsUserPage();

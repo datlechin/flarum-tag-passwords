@@ -6,6 +6,7 @@ use Flarum\Api\Serializer\BasicDiscussionSerializer;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\Discussion\Discussion;
 use Flarum\Tags\Tag;
+use Datlechin\TagPasswords\Utils\ReferrerFinder;
 
 class AddDiscussionAttributes
 {
@@ -14,24 +15,6 @@ class AddDiscussionAttributes
     public function __construct(SettingsRepositoryInterface $settings)
     {
         $this->settings = $settings;
-    }
-
-    /**
-     * Used to identify the API referer for the User Page, there is an issue of loading the extended Tag variables.
-     * This can be safely removed when /u/[index] works with the extended Flarum Tag Model, for the time being ProtectedTag model was created.
-     * That is used in editPostsUserPage.
-     */
-    public function findReferrerUserPage($headers)
-    {
-        $referrer = $headers['referer'] ?? [];
-        $isFound = false;
-        foreach ($referrer as &$url) {
-            $urlPath = parse_url($url, PHP_URL_PATH);
-            if (str_starts_with($urlPath, '/u/')) {
-                return $isFound = true;
-            }
-        }
-        return $isFound;
     }
 
     /**
@@ -46,22 +29,26 @@ class AddDiscussionAttributes
 
         $protectedPasswordTags = [];
         $protectedGroupPermissionTags = [];
-        $isChecked = $isUserPage = false;
+        $isChecked = $isUserPage = $isProtected = $restrictData = false;
+
         foreach ($discussion->tags as &$tag) {
             $isPasswordProtected = (bool) $tag->password;
             $isGroupPermissionProtected = (bool) $tag->protected_groups;
             if ($isPasswordProtected || $isGroupPermissionProtected) {
                 if (!$isChecked) {
-                    $headers = $serializer->getRequest()->getHeaders();
-                    $isUserPage = $this->findReferrerUserPage($headers);
+                    // Avoid checking the header multiple times, this is used to identify User Page Post
+                    $isUserPage = ReferrerFinder::findUserPagePost($serializer->getRequest());
+                    $isChecked = true;
                 }
                 // Only do actor checks if tag has any protection
-                $state = $tag->stateFor($actor);
-                $isUnlocked =  (bool) $state->is_unlocked;
+                $isUnlocked = $actor->can('isTagUnlocked', $tag);
                 if (!$isUnlocked) {
-                    $tag->is_unlocked = $isUnlocked;
+                    if (!$isProtected) {
+                        $isProtected = true;
+                    }
                     if ($isPasswordProtected) {
                         if ($isUserPage) {
+                            $tag->is_unlocked = $isUnlocked;
                             $tag->is_password_protected = $isPasswordProtected;
                             $tag->is_group_protected = false;
                             $tag->password = null;
@@ -69,6 +56,7 @@ class AddDiscussionAttributes
                         array_push($protectedPasswordTags, $tag);
                     } else {
                         if ($isUserPage) {
+                            $tag->is_unlocked = $isUnlocked;
                             $tag->is_password_protected = false;
                             $tag->is_group_protected = $isGroupPermissionProtected;
                             $tag->protected_groups = null;
@@ -78,7 +66,19 @@ class AddDiscussionAttributes
                 }
             }
         }
-
+        if ($isProtected) {
+            if (!$isUserPage && ReferrerFinder::findDiscussion($serializer->getRequest(), $discussion->id)) {
+                $restrictData = !$actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_discussion');
+            } else {
+                $restrictData = true;
+            }
+        }
+        if ($restrictData) {
+            // Discussion is protected
+            $attributes['id'] = null;
+            $attributes['slug'] = null;
+            $attributes['title'] = null;
+        }
         $totalProtectedTags = count($protectedPasswordTags) + count($protectedGroupPermissionTags);
         $attributes['protectedPasswordTags'] = $protectedPasswordTags;
         $attributes['protectedGroupPermissionTags'] = $protectedGroupPermissionTags;

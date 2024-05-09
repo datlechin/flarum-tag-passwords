@@ -7,9 +7,18 @@ import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import Placeholder from 'flarum/common/components/Placeholder';
 import PostsUserPage from 'flarum/forum/components/PostsUserPage';
 import CommentPost from 'flarum/forum/components/CommentPost';
-import TagProtectedCommentPost from './components/TagProtectedCommentPost';
-import tagsLabel from '../common/helpers/tagsLabel';
 import ProtectedTag from '../common/models/ProtectedTag';
+import tooltipForPermission from '../common/helpers/tooltipForPermission';
+
+function provideTooltip (discussion, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags) {
+  if (isProtectedPasswordTags && !isProtectedGroupPermissionTags) {
+    return tooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.post_list.title.password_protected'), app.translator.trans('datlechin-tag-passwords.forum.post_list.info.password_protected'), isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)
+  } else if (!isProtectedPasswordTags && isProtectedGroupPermissionTags) {
+    return tooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.post_list.title.group_protected'), app.translator.trans('datlechin-tag-passwords.forum.post_list.info.group_protected'), isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)
+  } else {
+    return tooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.post_list.title.multiple'), app.translator.trans('datlechin-tag-passwords.forum.post_list.info.multiple'), isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)
+  }
+}
 
 export default function () {
   function processProtectedTagsForPost(protectedTags,) {
@@ -54,15 +63,11 @@ export default function () {
               if (discussion.isProtectedTagDisplayedForPostList()) {
                 const tags = processProtectedTagsForPost(discussion.protectedPasswordTags().concat(discussion.protectedGroupPermissionTags()));
 
+                const isProtectedPasswordTags = discussion.protectedPasswordTags().length > 0;
+                const isProtectedGroupPermissionTags = discussion.protectedGroupPermissionTags().length > 0;
                 return (
                   <li>
-                    <div className="PostsUserPage-discussion">{tagsLabel(tags, {}, true, false)}
-                      {app.translator.trans('core.forum.user.in_discussion_text', {
-                        discussion: <Link href='#'></Link>,
-                      })}
-                    </div>
-      
-                    <TagProtectedCommentPost post={post} />
+                      {provideTooltip(discussion, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)}
                   </li>
                 )
               } else {

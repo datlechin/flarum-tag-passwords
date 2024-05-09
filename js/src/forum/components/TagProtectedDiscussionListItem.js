@@ -7,23 +7,7 @@ import Tooltip from 'flarum/common/components/Tooltip';
 import humanTime from 'flarum/common/helpers/humanTime';
 import avatar from 'flarum/common/helpers/avatar';
 import icon from 'flarum/common/helpers/icon';
-import tagsLabel from '../../common/helpers/tagsLabel';
-
-function getTooltipForPermission(discussion, title, tooltip, isPasswordProtected, isGroupProtected) {
-  return <Tooltip text={tooltip} position="bottom">
-    <div className="DiscussionListItem-main">
-      <h2 className="DiscussionListItem-title">
-        {isPasswordProtected ? icon('fas fa-lock'): <></>}
-        {isGroupProtected? icon('fas fa-user-lock'): <></>}
-        {' '+title}
-      </h2>
-      {tagsLabel(discussion.tags(), {}, true, false)}
-      <ul class="DiscussionListItem-info"><li class="item-tags">
-        {tagsLabel(discussion.tags(), {}, false)}
-      </li></ul>
-    </div>
-  </Tooltip>
-}
+import tooltipForPermission from '../../common/helpers/tooltipForPermission';
 
 export default class TagProtectedDiscussionListItem extends DiscussionListItem {
   view() {
@@ -72,15 +56,15 @@ export default class TagProtectedDiscussionListItem extends DiscussionListItem {
     const isProtectedGroupPermissionTags = discussion.protectedGroupPermissionTags().length > 0;
     if (isProtectedPasswordTags && !isProtectedGroupPermissionTags) {
       return <Link className="DiscussionListItem-main" href="#">
-        {getTooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.discussion_list.title.password_protected'), app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.password_protected'), isProtectedPasswordTags, isProtectedGroupPermissionTags)}
+        {tooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.discussion_list.title.password_protected'), app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.password_protected'), isProtectedPasswordTags, isProtectedGroupPermissionTags)}
       </Link>
     } else if (!isProtectedPasswordTags && isProtectedGroupPermissionTags) {
       return <Link className="DiscussionListItem-main" href="#">
-        {getTooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.discussion_list.title.group_protected'), app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.group_protected'), isProtectedPasswordTags, isProtectedGroupPermissionTags)}
+        {tooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.discussion_list.title.group_protected'), app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.group_protected'), isProtectedPasswordTags, isProtectedGroupPermissionTags)}
       </Link>
     } else {
       return <Link className="DiscussionListItem-main" href="#">
-        {getTooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.discussion_list.title.multiple'), app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.multiple'), isProtectedPasswordTags, isProtectedGroupPermissionTags)}
+        {tooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.discussion_list.title.multiple'), app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.multiple'), isProtectedPasswordTags, isProtectedGroupPermissionTags)}
       </Link>
     }
   }
