@@ -36,8 +36,10 @@ class AddPostAttributes
             }
         }
         if ($restrictData) {
-            $attributes['content'] = null;
-            $attributes['contentHtml'] = null;
+            // Content is empty to restricting data from API usage, to ensure compatibility with other extension that are using truncate on string. Content must be an empty string '', for example truncate(firstPost.contentPlain()) to stop breakage.
+            $attributes['id'] = null;
+            $attributes['content'] = '';
+            $attributes['contentHtml'] = '';
             $attributes['ipAddress'] = null;
         }
         $attributes['isUnlocked'] = $isUnlocked;

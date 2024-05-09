@@ -76,10 +76,10 @@ class AddDiscussionAttributes
             }
         }
         if ($restrictData) {
-            // Discussion is protected
+            // Discussion slug and title is empty to restricting data from API usage, to ensure compatibility with other extension that are using truncate on string. Slug and title must be an empty string '', for example truncate(discussion.title()) to stop breakage.
             $attributes['id'] = null;
-            $attributes['slug'] = null;
-            $attributes['title'] = null;
+            $attributes['slug'] = '';
+            $attributes['title'] = '';
         }
         $totalProtectedTags = count($protectedPasswordTags) + count($protectedGroupPermissionTags);
         $attributes['protectedPasswordTags'] = $protectedPasswordTags;
