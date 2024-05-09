@@ -8,6 +8,11 @@ class ReferrerFinder
 {
     static function findDiscussion(Request $request, int $discussionId): bool
     {
+        // Must check if API is loaded within the direct link of the discussion
+        $target = $request->getRequestTarget();
+        if (str_starts_with($target, '/discussions/'.$discussionId)) {
+            return true;
+        }
         $headers = $request->getHeaders();
         $referers = $headers['referer'] ?? [];
         foreach ($referers as &$url) {

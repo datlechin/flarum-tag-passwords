@@ -49,9 +49,9 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
       allowGuest: true
     }, 'view')
     .registerPermission({
-      permission: 'flarum-tag-passwords.display_protected_tag_from_discussion',
+      permission: 'flarum-tag-passwords.display_protected_tag_from_discussion_page',
       icon: 'fas fa-link',
-      label: app.translator.trans('datlechin-tag-passwords.admin.setting.display_protected_tag_from_discussion'),
+      label: app.translator.trans('datlechin-tag-passwords.admin.setting.display_protected_tag_from_discussion_page'),
       allowGuest: true
     }, 'view')
 

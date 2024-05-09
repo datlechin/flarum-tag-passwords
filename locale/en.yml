@@ -8,7 +8,7 @@ datlechin-tag-passwords:
       display_protected_tag_from_tags_page: Display Protected Tag in Tags page navigation
       display_protected_tag_from_discussion_list: Display Protected Tag in Discussion List, with Protection Summary
       display_protected_tag_from_post_list: Display Protected Tag in Post List, with Protection Summary
-      display_protected_tag_from_discussion: Display Protected Tag in Discussion, with URL Sharing
+      display_protected_tag_from_discussion_page: Display Protected Tag in Discussion, with URL Sharing
       heading:
         discussion: Discussion List Display
       discussion:
@@ -53,3 +53,8 @@ datlechin-tag-passwords:
         password_protected: To be able to gain access to this post, you must provide the correct password for the Protected Tag.
         group_protected: To be able to gain access to this post, you must have the correct role assigned to your account.
         multiple: To be able to gain access to this post, you need to unlock all protected Tags.
+    discussion_page:
+      title:
+        password_protected: Discussion is Password Protected
+        group_protected: Discussion is Permission Group Protected
+        multiple: Discussion is Protected

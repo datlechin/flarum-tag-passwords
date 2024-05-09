@@ -30,7 +30,7 @@ class AddPostAttributes
         $restrictData = false;
         if (!$isUnlocked) {
             if (ReferrerFinder::findDiscussion($serializer->getRequest(), $post->discussion_id)) {
-                $restrictData = !$actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_discussion');
+                $restrictData = !$actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_discussion_page');
             } else {
                 $restrictData = true;
             }

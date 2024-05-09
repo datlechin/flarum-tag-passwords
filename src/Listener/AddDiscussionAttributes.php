@@ -66,9 +66,11 @@ class AddDiscussionAttributes
                 }
             }
         }
+        $isProtectedTagDisplayedForDiscussionPage = true;
         if ($isProtected) {
             if (!$isUserPage && ReferrerFinder::findDiscussion($serializer->getRequest(), $discussion->id)) {
-                $restrictData = !$actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_discussion');
+                $isProtectedTagDisplayedForDiscussionPage = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_discussion_page');
+                $restrictData = !$isProtectedTagDisplayedForDiscussionPage;
             } else {
                 $restrictData = true;
             }
@@ -95,6 +97,7 @@ class AddDiscussionAttributes
         $attributes['isProtectedTagDisplayedForDiscussionList'] = $isProtectedTagDisplayedForDiscussionList;
         $attributes['isProtectedTagDisplayedForDiscussionAvator'] = $isProtectedTagDisplayedForDiscussionAvator;
         $attributes['isProtectedTagDisplayedForPostList'] = $isProtectedTagDisplayedForPostList;
+        $attributes['isProtectedTagDisplayedForDiscussionPage'] = $isProtectedTagDisplayedForDiscussionPage;
         return $attributes;
     }
 }

@@ -7,6 +7,7 @@ import editTagsPage from './editTagsPage';
 import editPostsUserPage from './editPostsUserPage';
 import editDiscussionList from './editDiscussionList';
 import editIndexPage from './editIndexPage';
+import editDiscussionPage from './editDiscussionPage';
 
 app.initializers.add('datlechin/flarum-tag-passwords', () => {
   Post.prototype.isUnlocked = Model.attribute('isUnlocked');
@@ -23,9 +24,10 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
   Discussion.prototype.isProtectedTagDisplayedForDiscussionList = Model.attribute('isProtectedTagDisplayedForDiscussionList');
   Discussion.prototype.isProtectedTagDisplayedForDiscussionAvator = Model.attribute('isProtectedTagDisplayedForDiscussionAvator');
   Discussion.prototype.isProtectedTagDisplayedForPostList = Model.attribute('isProtectedTagDisplayedForPostList');
-  Discussion.prototype.isProtectedTagDisplayedForDiscussion = Model.attribute('isProtectedTagDisplayedForDiscussion');
+  Discussion.prototype.isProtectedTagDisplayedForDiscussionPage = Model.attribute('isProtectedTagDisplayedForDiscussionPage');
   editDiscussionList();
   editTagsPage();
   editPostsUserPage();
   editIndexPage();
+  editDiscussionPage();
 });

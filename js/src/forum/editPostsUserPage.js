@@ -11,13 +11,16 @@ import ProtectedTag from '../common/models/ProtectedTag';
 import tooltipForPermission from '../common/helpers/tooltipForPermission';
 
 function provideTooltip (discussion, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags) {
+  let title = app.translator.trans('datlechin-tag-passwords.forum.post_list.title.multiple');
+  let info = app.translator.trans('datlechin-tag-passwords.forum.post_list.info.multiple');
   if (isProtectedPasswordTags && !isProtectedGroupPermissionTags) {
-    return tooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.post_list.title.password_protected'), app.translator.trans('datlechin-tag-passwords.forum.post_list.info.password_protected'), isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)
+    title = app.translator.trans('datlechin-tag-passwords.forum.post_list.title.password_protected');
+    info = app.translator.trans('datlechin-tag-passwords.forum.post_list.info.password_protected');
   } else if (!isProtectedPasswordTags && isProtectedGroupPermissionTags) {
-    return tooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.post_list.title.group_protected'), app.translator.trans('datlechin-tag-passwords.forum.post_list.info.group_protected'), isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)
-  } else {
-    return tooltipForPermission(discussion, app.translator.trans('datlechin-tag-passwords.forum.post_list.title.multiple'), app.translator.trans('datlechin-tag-passwords.forum.post_list.info.multiple'), isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)
+    title = app.translator.trans('datlechin-tag-passwords.forum.post_list.title.group_protected');
+    info = app.translator.trans('datlechin-tag-passwords.forum.post_list.info.group_protected');
   }
+  return tooltipForPermission(discussion, title, info, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)
 }
 
 export default function () {
