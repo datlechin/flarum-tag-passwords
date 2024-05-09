@@ -1,5 +1,4 @@
-import app from 'flarum/forum/app';
-import { extend, override } from 'flarum/common/extend';
+import { extend } from 'flarum/common/extend';
 import IndexPage from 'flarum/forum/components/IndexPage';
 import TagPasswordRequired from './components/TagPasswordRequired';
 import TagGroupRequired from './components/TagGroupRequired';

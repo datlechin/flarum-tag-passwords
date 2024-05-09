@@ -1,6 +1,5 @@
 import app from 'flarum/forum/app';
-import { extend, override } from 'flarum/common/extend';
-import Tag from 'flarum/tags/models/Tag';
+import { override } from 'flarum/common/extend';
 import Link from 'flarum/common/components/Link';
 import Button from 'flarum/common/components/Button';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';

@@ -1,17 +1,10 @@
 import app from 'flarum/forum/app';
-import { extend, override } from 'flarum/common/extend';
+import { override } from 'flarum/common/extend';
 import type Mithril from 'mithril';
 import DiscussionPage from 'flarum/forum/components/DiscussionPage';
 import Discussion from 'flarum/common/models/Discussion';
 import Post from 'flarum/common/models/Post';
 import ItemList from 'flarum/common/utils/ItemList';
-import classList from 'flarum/common/utils/classList';
-import DiscussionList from 'flarum/forum/components/DiscussionList';
-import DiscussionListItem from 'flarum/forum/components/DiscussionListItem';
-import Button from 'flarum/common/components/Button';
-import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
-import Placeholder from 'flarum/common/components/Placeholder';
-import TagProtectedDiscussionListItem from './components/TagProtectedDiscussionListItem';
 import TagProtectedDiscussionHero from './components/TagProtectedDiscussionHero';
 import DiscussionHero from 'flarum/forum/components/DiscussionHero';
 import PostStreamState from 'flarum/forum/states/PostStreamState';
