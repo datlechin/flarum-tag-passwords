@@ -8,6 +8,7 @@ import humanTime from 'flarum/common/helpers/humanTime';
 import avatar from 'flarum/common/helpers/avatar';
 import icon from 'flarum/common/helpers/icon';
 import tooltipForPermission from '../../common/helpers/tooltipForPermission';
+import tooltipForDiscussion from '../../common/helpers/tooltipForDiscussion';
 
 export default class TagProtectedDiscussionListItem extends DiscussionListItem {
   view() {
@@ -70,31 +71,6 @@ export default class TagProtectedDiscussionListItem extends DiscussionListItem {
 
   authorAvatarView() {
     const discussion = this.attrs.discussion;
-    if (discussion.isProtectedTagDisplayedForDiscussionAvator()) {
-      const user = discussion.user();
-      return (
-        <Tooltip
-          text={app.translator.trans('core.forum.discussion_list.started_text', { user, ago: humanTime(discussion.createdAt()) })}
-          position="right"
-        >
-          <Link className="DiscussionListItem-author" href={user ? app.route.user(user) : '#'}>
-            {avatar(user || null, { title: '' })}
-          </Link>
-        </Tooltip>
-      );
-    } else {
-      return (
-        <Tooltip
-          text={app.translator.trans('core.forum.discussion_list.started_text', {ago: humanTime(discussion.createdAt()) })}
-          position="right"
-        >
-          <Link className="DiscussionListItem-author" href="#">
-            <span class="Avatar" loading="lazy">
-            {icon('fas fa-question')}
-            </span>
-          </Link>
-        </Tooltip>
-      );
-    }
+    return tooltipForDiscussion(discussion)
   }
 }
