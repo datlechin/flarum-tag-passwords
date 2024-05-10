@@ -7,9 +7,6 @@ use Illuminate\Support\Arr;
 
 class SavePasswordToDatabase
 {
-    /**
-     * @param Saving $event
-     */
     public function handle(Saving $event)
     {
         $tag = $event->tag;

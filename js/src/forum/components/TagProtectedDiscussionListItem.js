@@ -15,15 +15,9 @@ export default class TagProtectedDiscussionListItem extends DiscussionListItem {
     const attrs = this.elementAttrs();
     // Check whether admin wish to display protected discussion within the discussion list
     if (discussion.isProtectedTagDisplayedForDiscussionList()) {
-      return (
-        <div {...attrs}>
-          {this.contentView()}
-        </div>
-      );
+      return <div {...attrs}>{this.contentView()}</div>;
     } else {
-      return (
-        <div></div>
-      );
+      return <div></div>;
     }
   }
   processCloudView(cloud) {
@@ -60,13 +54,15 @@ export default class TagProtectedDiscussionListItem extends DiscussionListItem {
       title = app.translator.trans('datlechin-tag-passwords.forum.discussion_list.title.group_protected');
       info = app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.group_protected');
     }
-    return <Link className="DiscussionListItem-main" href="#">
-      {tooltipForPermission(discussion, "DiscussionListItem", title, info, isProtectedPasswordTags, isProtectedGroupPermissionTags)}
-    </Link>
+    return (
+      <Link className="DiscussionListItem-main" href="#">
+        {tooltipForPermission(discussion, 'DiscussionListItem', title, info, isProtectedPasswordTags, isProtectedGroupPermissionTags)}
+      </Link>
+    );
   }
 
   authorAvatarView() {
     const discussion = this.attrs.discussion;
-    return tooltipForDiscussionAvatar(discussion, "DiscussionListItem-author")
+    return tooltipForDiscussionAvatar(discussion, 'DiscussionListItem-author');
   }
 }

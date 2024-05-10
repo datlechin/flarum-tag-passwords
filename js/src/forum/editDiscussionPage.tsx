@@ -22,9 +22,7 @@ export default function () {
     } else {
       const params = this.requestParams();
 
-      app.store.find<Discussion>('discussions', m.route.param('id'), params).then(
-        show.bind(this)
-      );
+      app.store.find<Discussion>('discussions', m.route.param('id'), params).then(show.bind(this));
     }
     m.redraw();
   }
@@ -46,7 +44,7 @@ export default function () {
    */
   function show(discussion: ApiResponseSingle<Discussion>): void {
     app.setTitleCount(0);
-    if(discussion.isProtectedTagDisplayedForDiscussionPage()) {
+    if (discussion.isProtectedTagDisplayedForDiscussionPage()) {
       app.history.push('discussion', discussion.title());
       app.setTitle(discussion.title());
       // When the API responds with a discussion, it will also include a number of
@@ -89,8 +87,8 @@ export default function () {
         app.current.set('stream', this.stream);
       });
     } else {
-      app.history.push('discussion', "test");
-      app.setTitle("test");
+      app.history.push('discussion', 'test');
+      app.setTitle('test');
       this.stream = new PostStreamState(discussion, []);
       const rawNearParam = m.route.param('near');
       const nearParam = rawNearParam === 'reply' ? 'reply' : parseInt(rawNearParam);
@@ -114,4 +112,4 @@ export default function () {
   });
 
   override(DiscussionPage.prototype, 'load', extendDiscussionPageLoad);
-};
+}

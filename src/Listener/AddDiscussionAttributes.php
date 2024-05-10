@@ -2,11 +2,11 @@
 
 namespace Datlechin\TagPasswords\Listener;
 
-use Flarum\Api\Serializer\BasicDiscussionSerializer;
-use Flarum\Settings\SettingsRepositoryInterface;
-use Flarum\Discussion\Discussion;
-use Flarum\Tags\Tag;
 use Datlechin\TagPasswords\Utils\ReferrerFinder;
+use Flarum\Api\Serializer\BasicDiscussionSerializer;
+use Flarum\Discussion\Discussion;
+use Flarum\Settings\SettingsRepositoryInterface;
+use Flarum\Tags\Tag;
 
 class AddDiscussionAttributes
 {
@@ -17,12 +17,6 @@ class AddDiscussionAttributes
         $this->settings = $settings;
     }
 
-    /**
-     * @param BasicDiscussionSerializer $serializer
-     * @param Discussion $discussion
-     * @param array $attributes
-     * @return array
-     */
     public function __invoke(BasicDiscussionSerializer $serializer, Discussion $discussion, array $attributes): array
     {
         $actor = $serializer->getActor();
@@ -35,15 +29,15 @@ class AddDiscussionAttributes
             $isPasswordProtected = (bool) $tag->password;
             $isGroupPermissionProtected = (bool) $tag->protected_groups;
             if ($isPasswordProtected || $isGroupPermissionProtected) {
-                if (!$isChecked) {
+                if (! $isChecked) {
                     // Avoid checking the header multiple times, this is used to identify User Page Post
                     $isUserPage = ReferrerFinder::findUserPagePost($serializer->getRequest());
                     $isChecked = true;
                 }
                 // Only do actor checks if tag has any protection
                 $isUnlocked = $actor->can('isTagUnlocked', $tag);
-                if (!$isUnlocked) {
-                    if (!$isProtected) {
+                if (! $isUnlocked) {
+                    if (! $isProtected) {
                         $isProtected = true;
                     }
                     if ($isPasswordProtected) {
@@ -68,9 +62,9 @@ class AddDiscussionAttributes
         }
         $isProtectedTagDisplayedForDiscussionPage = true;
         if ($isProtected) {
-            if (!$isUserPage && ReferrerFinder::findDiscussion($serializer->getRequest(), $discussion->id)) {
+            if (! $isUserPage && ReferrerFinder::findDiscussion($serializer->getRequest(), $discussion->id)) {
                 $isProtectedTagDisplayedForDiscussionPage = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_discussion_page');
-                $restrictData = !$isProtectedTagDisplayedForDiscussionPage;
+                $restrictData = ! $isProtectedTagDisplayedForDiscussionPage;
             } else {
                 $restrictData = true;
             }
@@ -89,7 +83,7 @@ class AddDiscussionAttributes
         $isProtectedTagDisplayedForDiscussionList = false;
         $isProtectedTagDisplayedForDiscussionAvatar = false;
         $isProtectedTagDisplayedForPostList = false;
-        if($totalProtectedTags > 0) {
+        if ($totalProtectedTags > 0) {
             $isProtectedTagDisplayedForDiscussionList = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_discussion_list');
             $isProtectedTagDisplayedForDiscussionAvatar = $actor->hasPermission('flarum-tag-passwords.display_discussion_avatar');
             $isProtectedTagDisplayedForPostList = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_post_list');
@@ -98,6 +92,7 @@ class AddDiscussionAttributes
         $attributes['isProtectedTagDisplayedForDiscussionAvatar'] = $isProtectedTagDisplayedForDiscussionAvatar;
         $attributes['isProtectedTagDisplayedForPostList'] = $isProtectedTagDisplayedForPostList;
         $attributes['isProtectedTagDisplayedForDiscussionPage'] = $isProtectedTagDisplayedForDiscussionPage;
+
         return $attributes;
     }
 }

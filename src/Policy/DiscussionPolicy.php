@@ -22,14 +22,15 @@ class DiscussionPolicy extends AbstractPolicy
         foreach ($tags as &$tag) {
             $isPasswordProtected = (bool) $tag->password;
             $isGroupPermissionProtected = (bool) $tag->protected_groups;
-            if($isPasswordProtected || $isGroupPermissionProtected) {
+            if ($isPasswordProtected || $isGroupPermissionProtected) {
                 $state = $tag->stateFor($actor);
                 $isUnlocked = (bool) $state->is_unlocked;
-                if(!$isUnlocked) {
+                if (! $isUnlocked) {
                     return false;
                 }
             }
         }
+
         return true;
     }
 }

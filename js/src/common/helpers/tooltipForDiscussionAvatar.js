@@ -5,9 +5,13 @@ import Link from 'flarum/common/components/Link';
 
 export default function tooltipForDiscussionAvatar(discussion, className) {
   const user = discussion.user();
-  let attributes = {ago: humanTime(discussion.createdAt())};
-  let url = '#'
-  let avatarDisplay = <span class="Avatar Avatar--anonymous" loading="lazy">?</span>;
+  let attributes = { ago: humanTime(discussion.createdAt()) };
+  let url = '#';
+  let avatarDisplay = (
+    <span class="Avatar Avatar--anonymous" loading="lazy">
+      ?
+    </span>
+  );
   if (discussion.isProtectedTagDisplayedForDiscussionAvatar()) {
     if (user) {
       attributes.user = user;
@@ -16,11 +20,11 @@ export default function tooltipForDiscussionAvatar(discussion, className) {
     }
   }
 
-  return <Tooltip
-    text={app.translator.trans('core.forum.discussion_list.started_text', attributes)}
-    position="right">
-    <Link className={className} href={url}>
-      {avatarDisplay}
-    </Link>
-  </Tooltip>
+  return (
+    <Tooltip text={app.translator.trans('core.forum.discussion_list.started_text', attributes)} position="right">
+      <Link className={className} href={url}>
+        {avatarDisplay}
+      </Link>
+    </Tooltip>
+  );
 }

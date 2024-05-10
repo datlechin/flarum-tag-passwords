@@ -2,8 +2,8 @@
 
 namespace Datlechin\TagPasswords\Listener;
 
-use Flarum\Tags\Api\Serializer\TagSerializer;
 use Flarum\Settings\SettingsRepositoryInterface;
+use Flarum\Tags\Api\Serializer\TagSerializer;
 use Flarum\Tags\Tag;
 
 class AddTagAttributes
@@ -15,12 +15,6 @@ class AddTagAttributes
         $this->settings = $settings;
     }
 
-    /**
-     * @param TagSerializer $serializer
-     * @param Tag $tag
-     * @param array $attributes
-     * @return array
-     */
     public function __invoke(TagSerializer $serializer, Tag $tag, array $attributes): array
     {
         $actor = $serializer->getActor();
@@ -31,14 +25,14 @@ class AddTagAttributes
 
         $attributes['isPasswordProtected'] = $isPasswordProtected;
         $attributes['isGroupProtected'] = $isGroupPermissionProtected;
-        $attributes['isUnlocked'] = $isUnlocked ;
+        $attributes['isUnlocked'] = $isUnlocked;
 
         $isProtectedTagDisplayedForSidebar = false;
         $isLockedIconDisplayed = false;
         $isProtectedTagDisplayedForTagsPage = false;
         $isProtectedTagDisplayedForPostList = false;
 
-        if(!$isUnlocked) {
+        if (! $isUnlocked) {
             $isProtectedTagDisplayedForSidebar = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_sidebar');
             $isLockedIconDisplayed = $actor->hasPermission('flarum-tag-passwords.display_unlock_icon');
             $isProtectedTagDisplayedForTagsPage = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_tags_page');
@@ -48,7 +42,6 @@ class AddTagAttributes
         $attributes['isLockedIconDisplayed'] = $isLockedIconDisplayed;
         $attributes['isProtectedTagDisplayedForTagsPage'] = $isProtectedTagDisplayedForTagsPage;
         $attributes['isProtectedTagDisplayedForPostList'] = $isProtectedTagDisplayedForPostList;
-
 
         if ($actor->isAdmin()) {
             $attributes['password'] = $tag->password;

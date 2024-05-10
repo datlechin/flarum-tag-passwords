@@ -5,10 +5,10 @@ import TagGroupRequired from './components/TagGroupRequired';
 
 export default function () {
   /*
-  * Used for finding the correct location to replace the main DiscussionList with protection section
-  */
+   * Used for finding the correct location to replace the main DiscussionList with protection section
+   */
   function findDiscussionList(vdom, classNames, classNameIndex, replaceChild) {
-    for(var child of vdom.children) {
+    for (var child of vdom.children) {
       if (child.attrs.className && child.attrs.className.indexOf(classNames[classNameIndex]) !== -1) {
         classNameIndex += 1;
         if (classNameIndex == classNames.length) {
@@ -18,17 +18,17 @@ export default function () {
         }
         return findDiscussionList(child, classNames, classNameIndex, replaceChild);
       }
-    };
+    }
   }
 
   extend(IndexPage.prototype, 'view', function (vdom) {
     const tag = this.currentTag();
     if (tag && !tag.isUnlocked()) {
       if (tag.isGroupProtected()) {
-        findDiscussionList(vdom, ['container','sideNavContainer','IndexPage-results'], 0, [TagGroupRequired.component({ currentTag: tag })]);
+        findDiscussionList(vdom, ['container', 'sideNavContainer', 'IndexPage-results'], 0, [TagGroupRequired.component({ currentTag: tag })]);
       } else if (tag.isPasswordProtected()) {
-        findDiscussionList(vdom, ['container','sideNavContainer','IndexPage-results'], 0, [TagPasswordRequired.component({ currentTag: tag })]);
+        findDiscussionList(vdom, ['container', 'sideNavContainer', 'IndexPage-results'], 0, [TagPasswordRequired.component({ currentTag: tag })]);
       }
     }
   });
-};
+}

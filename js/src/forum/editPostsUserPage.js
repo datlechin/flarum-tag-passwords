@@ -9,7 +9,7 @@ import CommentPost from 'flarum/forum/components/CommentPost';
 import ProtectedTag from '../common/models/ProtectedTag';
 import tooltipForPermission from '../common/helpers/tooltipForPermission';
 
-function provideTooltip (discussion, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags) {
+function provideTooltip(discussion, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags) {
   let title = app.translator.trans('datlechin-tag-passwords.forum.post_list.title.multiple');
   let info = app.translator.trans('datlechin-tag-passwords.forum.post_list.info.multiple');
   if (isProtectedPasswordTags && !isProtectedGroupPermissionTags) {
@@ -19,11 +19,11 @@ function provideTooltip (discussion, isProtectedPasswordTags, isProtectedGroupPe
     title = app.translator.trans('datlechin-tag-passwords.forum.post_list.title.group_protected');
     info = app.translator.trans('datlechin-tag-passwords.forum.post_list.info.group_protected');
   }
-  return tooltipForPermission(discussion, "PostsUserPage", title, info, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)
+  return tooltipForPermission(discussion, 'PostsUserPage', title, info, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags);
 }
 
 export default function () {
-  function processProtectedTagsForPost(protectedTags,) {
+  function processProtectedTagsForPost(protectedTags) {
     let collection = [];
     for (let i = 0; i < protectedTags.length; i++) {
       let foundTag = new ProtectedTag();
@@ -67,13 +67,9 @@ export default function () {
 
                 const isProtectedPasswordTags = discussion.protectedPasswordTags().length > 0;
                 const isProtectedGroupPermissionTags = discussion.protectedGroupPermissionTags().length > 0;
-                return (
-                  <li>
-                      {provideTooltip(discussion, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)}
-                  </li>
-                )
+                return <li>{provideTooltip(discussion, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)}</li>;
               } else {
-                return <></>
+                return <></>;
               }
             } else {
               return (
@@ -86,13 +82,13 @@ export default function () {
 
                   <CommentPost post={post} />
                 </li>
-              )
+              );
             }
-        })}
+          })}
         </ul>
         <div className="PostsUserPage-loadMore">{footer}</div>
       </div>
     );
   }
   override(PostsUserPage.prototype, 'content', extendPostsUserPageContent);
-};
+}

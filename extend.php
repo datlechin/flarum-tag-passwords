@@ -4,28 +4,27 @@ namespace Datlechin\TagPasswords;
 
 use Datlechin\TagPasswords\Access\ScopeDiscussionVisibilityForAbility;
 use Datlechin\TagPasswords\Api\Controller\AuthController;
-use Datlechin\TagPasswords\Listener\AddTagAttributes;
 use Datlechin\TagPasswords\Listener\AddDiscussionAttributes;
 use Datlechin\TagPasswords\Listener\AddPostAttributes;
+use Datlechin\TagPasswords\Listener\AddTagAttributes;
 use Datlechin\TagPasswords\Listener\SavePasswordToDatabase;
-use Flarum\Discussion\Discussion;
-use Flarum\Tags\Tag;
-use Flarum\Extend;
-use Flarum\Tags\Api\Serializer\TagSerializer;
-use Flarum\Api\Serializer\DiscussionSerializer;
 use Flarum\Api\Serializer\BasicDiscussionSerializer;
 use Flarum\Api\Serializer\BasicPostSerializer;
+use Flarum\Discussion\Discussion;
+use Flarum\Extend;
+use Flarum\Tags\Api\Serializer\TagSerializer;
 use Flarum\Tags\Event\Saving;
+use Flarum\Tags\Tag;
 
 return [
     (new Extend\Frontend('forum'))
-        ->js(__DIR__ . '/js/dist/forum.js')
-        ->css(__DIR__ . '/less/forum.less'),
+        ->js(__DIR__.'/js/dist/forum.js')
+        ->css(__DIR__.'/less/forum.less'),
 
     (new Extend\Frontend('admin'))
-        ->js(__DIR__ . '/js/dist/admin.js'),
+        ->js(__DIR__.'/js/dist/admin.js'),
 
-    new Extend\Locales(__DIR__ . '/locale'),
+    new Extend\Locales(__DIR__.'/locale'),
 
     (new Extend\Event())
         ->listen(Saving::class, SavePasswordToDatabase::class),
@@ -56,5 +55,5 @@ return [
         ->default('flarum-tag-passwords.display_protected_tag_from_discussion_list', false)
         ->default('flarum-tag-passwords.display_discussion_avatar', false)
         ->default('flarum-tag-passwords.display_protected_tag_from_post_list', false)
-        ->default('flarum-tag-passwords.display_protected_tag_from_discussion_page', true)
+        ->default('flarum-tag-passwords.display_protected_tag_from_discussion_page', true),
 ];

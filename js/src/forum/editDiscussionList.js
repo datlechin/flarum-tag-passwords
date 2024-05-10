@@ -11,13 +11,17 @@ import TagProtectedDiscussionListItem from './components/TagProtectedDiscussionL
 export default function () {
   function processDiscussionListItem(discussion, pageNum, pageSize, itemNum, params) {
     if (discussion.numberOfProtectedTags() > 0) {
-      return <li key={0} data-id={0} role="article" aria-setsize="-1" aria-posinset={pageNum * pageSize + itemNum}>
-        <TagProtectedDiscussionListItem discussion={discussion} params={params} />
-      </li>
+      return (
+        <li key={0} data-id={0} role="article" aria-setsize="-1" aria-posinset={pageNum * pageSize + itemNum}>
+          <TagProtectedDiscussionListItem discussion={discussion} params={params} />
+        </li>
+      );
     } else {
-      return <li key={discussion.id()} data-id={discussion.id()} role="article" aria-setsize="-1" aria-posinset={pageNum * pageSize + itemNum}>
-        <DiscussionListItem discussion={discussion} params={params} />
-      </li>
+      return (
+        <li key={discussion.id()} data-id={discussion.id()} role="article" aria-setsize="-1" aria-posinset={pageNum * pageSize + itemNum}>
+          <DiscussionListItem discussion={discussion} params={params} />
+        </li>
+      );
     }
   }
 
@@ -56,9 +60,7 @@ export default function () {
       <div className={classList('DiscussionList', { 'DiscussionList--searchResults': state.isSearchResults() })}>
         <ul role="feed" aria-busy={isLoading} className="DiscussionList-discussions">
           {state.getPages().map((pg, pageNum) => {
-            return pg.items.map((discussion, itemNum) => (
-              processDiscussionListItem(discussion, pageNum, pageSize, itemNum, params)
-            ));
+            return pg.items.map((discussion, itemNum) => processDiscussionListItem(discussion, pageNum, pageSize, itemNum, params));
           })}
         </ul>
         <div className="DiscussionList-loadMore">{loading}</div>
@@ -67,4 +69,4 @@ export default function () {
   }
 
   override(DiscussionList.prototype, 'view', extendDiscussionListView);
-};
+}

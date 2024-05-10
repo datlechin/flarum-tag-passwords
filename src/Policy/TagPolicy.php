@@ -2,8 +2,8 @@
 
 namespace Datlechin\TagPasswords\Policy;
 
-use Flarum\Tags\Tag;
 use Flarum\Settings\SettingsRepositoryInterface;
+use Flarum\Tags\Tag;
 use Flarum\User\Access\AbstractPolicy;
 use Flarum\User\User;
 
@@ -23,8 +23,10 @@ class TagPolicy extends AbstractPolicy
         // Avoid checking for is_unlock all the time
         if ($isPasswordProtected || $isGroupProtected) {
             $state = $tag->stateFor($actor);
+
             return (bool) $state->is_unlocked;
         }
+
         return true;
     }
 }

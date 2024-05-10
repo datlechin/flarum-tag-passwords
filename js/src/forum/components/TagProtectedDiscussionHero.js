@@ -13,7 +13,6 @@ export default class TagProtectedDiscussionHero extends DiscussionHero {
         <div className="container">
           <ul className="DiscussionHero-items">{listItems(this.items().toArray())}</ul>
         </div>
-
       </header>
     );
   }
@@ -38,7 +37,7 @@ export default class TagProtectedDiscussionHero extends DiscussionHero {
       title = app.translator.trans('datlechin-tag-passwords.forum.discussion_page.title.group_protected');
     }
     items.add('title', <h2 className="DiscussionHero-title">{title}</h2>);
-    items.add('tags-protected', tagsLabel(tags, {link: true}, true, false));
+    items.add('tags-protected', tagsLabel(tags, { link: true }, true, false));
 
     return items;
   }

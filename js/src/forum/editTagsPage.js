@@ -41,13 +41,17 @@ export default function () {
 
   function amendTagTileLastPostedDiscussion(tag) {
     if (tag.isGroupProtected() && !tag.isUnlocked()) {
-      return <div>
-        {icon('fas fa-user-lock')} {app.translator.trans('datlechin-tag-passwords.forum.tags_page.group_protected')}
-      </div>
+      return (
+        <div>
+          {icon('fas fa-user-lock')} {app.translator.trans('datlechin-tag-passwords.forum.tags_page.group_protected')}
+        </div>
+      );
     } else if (tag.isPasswordProtected() && !tag.isUnlocked()) {
-      return <div>
-        {icon('fas fa-lock')} {app.translator.trans('datlechin-tag-passwords.forum.tags_page.password_protected')}
-      </div>
+      return (
+        <div>
+          {icon('fas fa-lock')} {app.translator.trans('datlechin-tag-passwords.forum.tags_page.password_protected')}
+        </div>
+      );
     } else {
       const lastPostedDiscussion = tag.lastPostedDiscussion();
       if (lastPostedDiscussion) {
@@ -58,30 +62,38 @@ export default function () {
           const isProtectedGroupPermissionTags = protectedGroupPermissionTags.length > 0;
 
           const protectedTags = protectedPasswordTags.concat(protectedGroupPermissionTags);
-          return <Link className="TagTile-lastPostedDiscussion" href={"/t/"+protectedTags[0].slug}>
-            <span className="TagTile-lastPostedDiscussion-title">
-              {isProtectedGroupPermissionTags? icon('fas fa-user-lock'): <></>}
-              {isProtectedPasswordTags? icon('fas fa-lock'): <></>}
-              {isProtectedGroupPermissionTags && isProtectedPasswordTags? app.translator.trans('datlechin-tag-passwords.forum.tags_page.discussion.multiple') : (isProtectedGroupPermissionTags ? app.translator.trans('datlechin-tag-passwords.forum.tags_page.discussion.group_protected'): app.translator.trans('datlechin-tag-passwords.forum.tags_page.discussion.password_protected'))}
-            </span>
-            {humanTime(lastPostedDiscussion.lastPostedAt())}
-          </Link>
+          return (
+            <Link className="TagTile-lastPostedDiscussion" href={'/t/' + protectedTags[0].slug}>
+              <span className="TagTile-lastPostedDiscussion-title">
+                {isProtectedGroupPermissionTags ? icon('fas fa-user-lock') : <></>}
+                {isProtectedPasswordTags ? icon('fas fa-lock') : <></>}
+                {isProtectedGroupPermissionTags && isProtectedPasswordTags
+                  ? app.translator.trans('datlechin-tag-passwords.forum.tags_page.discussion.multiple')
+                  : isProtectedGroupPermissionTags
+                  ? app.translator.trans('datlechin-tag-passwords.forum.tags_page.discussion.group_protected')
+                  : app.translator.trans('datlechin-tag-passwords.forum.tags_page.discussion.password_protected')}
+              </span>
+              {humanTime(lastPostedDiscussion.lastPostedAt())}
+            </Link>
+          );
         } else {
-          return <Link className="TagTile-lastPostedDiscussion" href={app.route.discussion(lastPostedDiscussion, lastPostedDiscussion.lastPostNumber())}>
-            <span className="TagTile-lastPostedDiscussion-title">{lastPostedDiscussion.title()}</span>
-            {humanTime(lastPostedDiscussion.lastPostedAt())}
-          </Link>
+          return (
+            <Link className="TagTile-lastPostedDiscussion" href={app.route.discussion(lastPostedDiscussion, lastPostedDiscussion.lastPostNumber())}>
+              <span className="TagTile-lastPostedDiscussion-title">{lastPostedDiscussion.title()}</span>
+              {humanTime(lastPostedDiscussion.lastPostedAt())}
+            </Link>
+          );
         }
       } else {
-        return <span className="TagTile-lastPostedDiscussion" />
+        return <span className="TagTile-lastPostedDiscussion" />;
       }
     }
   }
 
   /**
    * Used for amend the Tags Page footer of secondary tags
-   * @param {*} cloud 
-   * @returns 
+   * @param {*} cloud
+   * @returns
    */
   function processCloudView(cloud) {
     return <div className="TagCloud">{cloud.map((tag) => [tagLabel(tag, { link: true }, tag.isProtectedTagDisplayedForTagsPage()), ' '])}</div>;
@@ -108,39 +120,44 @@ export default function () {
 
               <p className="TagTile-description">{tag.description()}</p>
               {!!children && (
-                <div className="TagTile-children">{children.map((child) => {
-                  let iconObject = null;
-                  if (child.isPasswordProtected()) {
-                    if (child.isUnlocked()) {
-                      if (child.isLockedIconDisplayed()) {
-                        iconObject = icon('fas fa-unlock', {style: {fontSize: '13px', float: 'none'}});
+                <div className="TagTile-children">
+                  {children.map((child) => {
+                    let iconObject = null;
+                    if (child.isPasswordProtected()) {
+                      if (child.isUnlocked()) {
+                        if (child.isLockedIconDisplayed()) {
+                          iconObject = icon('fas fa-unlock', { style: { fontSize: '13px', float: 'none' } });
+                        }
+                      } else if (child.isProtectedTagDisplayedForTagsPage()) {
+                        iconObject = icon('fas fa-lock', { style: { fontSize: '13px', float: 'none' } });
+                      } else {
+                        return <></>;
                       }
-                    } else if (child.isProtectedTagDisplayedForTagsPage()) {
-                      iconObject = icon('fas fa-lock', {style: {fontSize: '13px', float: 'none'}});
-                    } else {
-                      return <></>;
                     }
-                  }
-                  if (child.isGroupProtected()) {
-                    if (child.isUnlocked()) {
-                      if (child.isLockedIconDisplayed()) {
-                        iconObject = icon('fas fa-unlock', {style: {fontSize: '13px', float: 'none'}});
+                    if (child.isGroupProtected()) {
+                      if (child.isUnlocked()) {
+                        if (child.isLockedIconDisplayed()) {
+                          iconObject = icon('fas fa-unlock', { style: { fontSize: '13px', float: 'none' } });
+                        }
+                      } else if (child.isProtectedTagDisplayedForTagsPage()) {
+                        iconObject = icon('fas fa-user-lock', { style: { fontSize: '13px', float: 'none' } });
+                      } else {
+                        return <></>;
                       }
-                    } else if (child.isProtectedTagDisplayedForTagsPage()) {
-                      iconObject = icon('fas fa-user-lock', {style: {fontSize: '13px', float: 'none'}});
-                    } else {
-                      return <></>;
                     }
-                  }
 
-                  return [<Link href={app.route.tag(child)}>{child.name()} { iconObject}</Link>, ' ']
-                })}</div>
+                    return [
+                      <Link href={app.route.tag(child)}>
+                        {child.name()} {iconObject}
+                      </Link>,
+                      ' ',
+                    ];
+                  })}
+                </div>
               )}
             </Link>
 
-            <span className="TagTile-lastPostedDiscussion">
-              {amendTagTileLastPostedDiscussion(tag)}
-            </span>
+            <span className="TagTile-lastPostedDiscussion">{amendTagTileLastPostedDiscussion(tag)}</span>
           </li>
         );
       } else {
@@ -169,4 +186,4 @@ export default function () {
 
     return items;
   });
-};
+}
