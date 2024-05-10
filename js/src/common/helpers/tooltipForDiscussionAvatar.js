@@ -4,7 +4,7 @@ import humanTime from 'flarum/common/helpers/humanTime';
 import avatar from 'flarum/common/helpers/avatar';
 import Link from 'flarum/common/components/Link';
 
-export default function tooltipForDiscussion(discussion) {
+export default function tooltipForDiscussionAvatar(discussion) {
   const user = discussion.user();
   let attributes = {ago: humanTime(discussion.createdAt())};
   let url = '#'

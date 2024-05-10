@@ -3,12 +3,8 @@ import DiscussionListItem from 'flarum/forum/components/DiscussionListItem';
 import DiscussionControls from 'flarum/utils/DiscussionControls';
 import classList from 'flarum/common/utils/classList';
 import Link from 'flarum/common/components/Link';
-import Tooltip from 'flarum/common/components/Tooltip';
-import humanTime from 'flarum/common/helpers/humanTime';
-import avatar from 'flarum/common/helpers/avatar';
-import icon from 'flarum/common/helpers/icon';
 import tooltipForPermission from '../../common/helpers/tooltipForPermission';
-import tooltipForDiscussion from '../../common/helpers/tooltipForDiscussion';
+import tooltipForDiscussionAvatar from '../../common/helpers/tooltipForDiscussionAvatar';
 
 export default class TagProtectedDiscussionListItem extends DiscussionListItem {
   view() {
@@ -71,6 +67,6 @@ export default class TagProtectedDiscussionListItem extends DiscussionListItem {
 
   authorAvatarView() {
     const discussion = this.attrs.discussion;
-    return tooltipForDiscussion(discussion)
+    return tooltipForDiscussionAvatar(discussion)
   }
 }
