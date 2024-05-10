@@ -1,5 +1,4 @@
 import Tooltip from 'flarum/common/components/Tooltip';
-import icon from 'flarum/common/helpers/icon';
 import humanTime from 'flarum/common/helpers/humanTime';
 import avatar from 'flarum/common/helpers/avatar';
 import Link from 'flarum/common/components/Link';
@@ -8,7 +7,7 @@ export default function tooltipForDiscussionAvatar(discussion, className) {
   const user = discussion.user();
   let attributes = {ago: humanTime(discussion.createdAt())};
   let url = '#'
-  let avatarDisplay = <span class="Avatar" loading="lazy">{icon('fas fa-question')}</span>;
+  let avatarDisplay = <span class="Avatar Avatar--anonymous" loading="lazy">?</span>;
   if (discussion.isProtectedTagDisplayedForDiscussionAvatar()) {
     if (user) {
       attributes.user = user;
