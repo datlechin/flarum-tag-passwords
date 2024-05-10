@@ -87,15 +87,15 @@ class AddDiscussionAttributes
         $attributes['numberOfProtectedTags'] = $totalProtectedTags;
 
         $isProtectedTagDisplayedForDiscussionList = false;
-        $isProtectedTagDisplayedForDiscussionAvator = false;
+        $isProtectedTagDisplayedForDiscussionAvatar = false;
         $isProtectedTagDisplayedForPostList = false;
         if($totalProtectedTags > 0) {
             $isProtectedTagDisplayedForDiscussionList = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_discussion_list');
-            $isProtectedTagDisplayedForDiscussionAvator = $actor->hasPermission('flarum-tag-passwords.display_discussion_avator');
+            $isProtectedTagDisplayedForDiscussionAvatar = $actor->hasPermission('flarum-tag-passwords.display_discussion_avatar');
             $isProtectedTagDisplayedForPostList = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_post_list');
         }
         $attributes['isProtectedTagDisplayedForDiscussionList'] = $isProtectedTagDisplayedForDiscussionList;
-        $attributes['isProtectedTagDisplayedForDiscussionAvator'] = $isProtectedTagDisplayedForDiscussionAvator;
+        $attributes['isProtectedTagDisplayedForDiscussionAvatar'] = $isProtectedTagDisplayedForDiscussionAvatar;
         $attributes['isProtectedTagDisplayedForPostList'] = $isProtectedTagDisplayedForPostList;
         $attributes['isProtectedTagDisplayedForDiscussionPage'] = $isProtectedTagDisplayedForDiscussionPage;
         return $attributes;

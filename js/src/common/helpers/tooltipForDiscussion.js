@@ -9,7 +9,7 @@ export default function tooltipForDiscussion(discussion) {
   let attributes = {ago: humanTime(discussion.createdAt())};
   let url = '#'
   let avatarDisplay = <span class="Avatar" loading="lazy">{icon('fas fa-question')}</span>;
-  if (discussion.isProtectedTagDisplayedForDiscussionAvator()) {
+  if (discussion.isProtectedTagDisplayedForDiscussionAvatar()) {
     if (user) {
       attributes.user = user;
       url = app.route.user(user);

@@ -22,7 +22,7 @@ app.initializers.add('datlechin/flarum-tag-passwords', () => {
   Discussion.prototype.protectedGroupPermissionTags = Model.attribute('protectedGroupPermissionTags');
   Discussion.prototype.numberOfProtectedTags = Model.attribute('numberOfProtectedTags');
   Discussion.prototype.isProtectedTagDisplayedForDiscussionList = Model.attribute('isProtectedTagDisplayedForDiscussionList');
-  Discussion.prototype.isProtectedTagDisplayedForDiscussionAvator = Model.attribute('isProtectedTagDisplayedForDiscussionAvator');
+  Discussion.prototype.isProtectedTagDisplayedForDiscussionAvatar = Model.attribute('isProtectedTagDisplayedForDiscussionAvatar');
   Discussion.prototype.isProtectedTagDisplayedForPostList = Model.attribute('isProtectedTagDisplayedForPostList');
   Discussion.prototype.isProtectedTagDisplayedForDiscussionPage = Model.attribute('isProtectedTagDisplayedForDiscussionPage');
   editDiscussionList();
