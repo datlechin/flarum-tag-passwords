@@ -43,7 +43,7 @@ class AuthController extends AbstractCreateController
         }
         if ($tag->protected_groups) {
             if (! $this->hasGroup($actor, json_decode($tag->protected_groups))) {
-                throw new Exception('Access Denied for Tag Access "'.$tag->name.'".');
+                throw new Exception('Access Denied for Tag Access "' . $tag->name . '".');
             }
         }
         if (! $actor->isGuest()) {
