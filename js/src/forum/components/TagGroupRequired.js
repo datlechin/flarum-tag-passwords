@@ -1,6 +1,5 @@
 import app from 'flarum/forum/app';
 import Component from 'flarum/common/Component';
-import Stream from 'flarum/common/utils/Stream';
 import Button from 'flarum/common/components/Button';
 
 export default class TagGroupRequired extends Component {

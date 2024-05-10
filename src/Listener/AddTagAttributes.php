@@ -25,13 +25,30 @@ class AddTagAttributes
     {
         $actor = $serializer->getActor();
 
-        $state = $tag->stateFor($actor);
-        $attributes['isProtectedTagDisplayedForSidebar'] = (bool) $this->settings->get('flarum-tag-passwords.display_protected_tag_from_sidebar');
-        $attributes['isLockedIconDisplayed'] = (bool) $this->settings->get('flarum-tag-passwords.display_unlock_icon');
-        $attributes['isProtectedTagDisplayedForTagsPage'] = (bool) $this->settings->get('flarum-tag-passwords.display_protected_tag_from_tags_page');
-        $attributes['isPasswordProtected'] = (bool) $tag->password;
-        $attributes['isGroupProtected'] = (bool) $tag->protected_groups;
-        $attributes['isUnlocked'] = (bool) $state->is_unlocked;
+        $isPasswordProtected = (bool) $tag->password;
+        $isGroupPermissionProtected = (bool) $tag->protected_groups;
+        $isUnlocked = $actor->can('isTagUnlocked', $tag);
+
+        $attributes['isPasswordProtected'] = $isPasswordProtected;
+        $attributes['isGroupProtected'] = $isGroupPermissionProtected;
+        $attributes['isUnlocked'] = $isUnlocked ;
+
+        $isProtectedTagDisplayedForSidebar = false;
+        $isLockedIconDisplayed = false;
+        $isProtectedTagDisplayedForTagsPage = false;
+        $isProtectedTagDisplayedForPostList = false;
+
+        if(!$isUnlocked) {
+            $isProtectedTagDisplayedForSidebar = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_sidebar');
+            $isLockedIconDisplayed = $actor->hasPermission('flarum-tag-passwords.display_unlock_icon');
+            $isProtectedTagDisplayedForTagsPage = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_tags_page');
+            $isProtectedTagDisplayedForPostList = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_post_list');
+        }
+        $attributes['isProtectedTagDisplayedForSidebar'] = $isProtectedTagDisplayedForSidebar;
+        $attributes['isLockedIconDisplayed'] = $isLockedIconDisplayed;
+        $attributes['isProtectedTagDisplayedForTagsPage'] = $isProtectedTagDisplayedForTagsPage;
+        $attributes['isProtectedTagDisplayedForPostList'] = $isProtectedTagDisplayedForPostList;
+
 
         if ($actor->isAdmin()) {
             $attributes['password'] = $tag->password;
