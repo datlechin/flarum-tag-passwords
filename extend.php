@@ -2,7 +2,6 @@
 
 namespace Datlechin\TagPasswords;
 
-use Datlechin\TagPasswords\Access\ScopeDiscussionVisibilityForAbility;
 use Datlechin\TagPasswords\Api\Controller\AuthController;
 use Datlechin\TagPasswords\Listener\AddDiscussionAttributes;
 use Datlechin\TagPasswords\Listener\AddPostAttributes;
@@ -44,9 +43,6 @@ return [
 
     (new Extend\Routes('api'))
         ->post('/datlechin/tag-passwords/auth', 'datlechin-tag-passwords.auth', AuthController::class),
-
-    (new Extend\ModelVisibility(Discussion::class))
-        ->scopeAll(ScopeDiscussionVisibilityForAbility::class),
 
     (new Extend\Settings())
         ->default('flarum-tag-passwords.display_unlock_icon', true)

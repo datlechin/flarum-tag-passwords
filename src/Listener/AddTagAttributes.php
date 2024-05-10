@@ -8,12 +8,7 @@ use Flarum\Tags\Tag;
 
 class AddTagAttributes
 {
-    protected SettingsRepositoryInterface $settings;
-
-    public function __construct(SettingsRepositoryInterface $settings)
-    {
-        $this->settings = $settings;
-    }
+    public function __construct(protected SettingsRepositoryInterface $settings) {}
 
     public function __invoke(TagSerializer $serializer, Tag $tag, array $attributes): array
     {
@@ -38,6 +33,7 @@ class AddTagAttributes
             $isProtectedTagDisplayedForTagsPage = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_tags_page');
             $isProtectedTagDisplayedForPostList = $actor->hasPermission('flarum-tag-passwords.display_protected_tag_from_post_list');
         }
+
         $attributes['isProtectedTagDisplayedForSidebar'] = $isProtectedTagDisplayedForSidebar;
         $attributes['isLockedIconDisplayed'] = $isLockedIconDisplayed;
         $attributes['isProtectedTagDisplayedForTagsPage'] = $isProtectedTagDisplayedForTagsPage;

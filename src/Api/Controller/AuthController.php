@@ -14,23 +14,10 @@ use Tobscure\JsonApi\Document;
 
 class AuthController extends AbstractCreateController
 {
-    /**
-     * {@inheritdoc}
-     */
     public $serializer = TagSerializer::class;
 
-    protected TagRepository $tags;
+    public function __construct(protected TagRepository $tags) {}
 
-    public function __construct(TagRepository $tags)
-    {
-        $this->tags = $tags;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws Exception
-     */
     protected function data(ServerRequestInterface $request, Document $document)
     {
         $actor = RequestUtil::getActor($request);
@@ -41,11 +28,13 @@ class AuthController extends AbstractCreateController
         if ($tag->password && $tag->password !== $data['password']) {
             throw new Exception('Password is incorrect');
         }
+
         if ($tag->protected_groups) {
             if (! $this->hasGroup($actor, json_decode($tag->protected_groups))) {
                 throw new Exception('Access Denied for Tag Access "' . $tag->name . '".');
             }
         }
+
         if (! $actor->isGuest()) {
             $state = $tag->stateFor($actor);
             $state->is_unlocked = true;
@@ -58,9 +47,9 @@ class AuthController extends AbstractCreateController
      */
     public function hasGroup(User $actor, array $protectedGroups): bool
     {
-        foreach ($actor->groups as $id => $permissionGroup) {
+        foreach ($actor->groups as $group) {
             foreach ($protectedGroups as &$protectedGroup) {
-                if ($permissionGroup->id === (int) $protectedGroup->id) {
+                if ($group->id == $protectedGroup->id) {
                     return true;
                 }
             }
