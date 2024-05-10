@@ -19,7 +19,7 @@ function provideTooltip (discussion, isProtectedPasswordTags, isProtectedGroupPe
     title = app.translator.trans('datlechin-tag-passwords.forum.post_list.title.group_protected');
     info = app.translator.trans('datlechin-tag-passwords.forum.post_list.info.group_protected');
   }
-  return tooltipForPermission(discussion, title, info, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)
+  return tooltipForPermission(discussion, "PostsUserPage", title, info, isProtectedPasswordTags, isProtectedGroupPermissionTags, tags)
 }
 
 export default function () {

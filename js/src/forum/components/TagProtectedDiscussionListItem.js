@@ -61,12 +61,12 @@ export default class TagProtectedDiscussionListItem extends DiscussionListItem {
       info = app.translator.trans('datlechin-tag-passwords.forum.discussion_list.info.group_protected');
     }
     return <Link className="DiscussionListItem-main" href="#">
-      {tooltipForPermission(discussion, title, info, isProtectedPasswordTags, isProtectedGroupPermissionTags)}
+      {tooltipForPermission(discussion, "DiscussionListItem", title, info, isProtectedPasswordTags, isProtectedGroupPermissionTags)}
     </Link>
   }
 
   authorAvatarView() {
     const discussion = this.attrs.discussion;
-    return tooltipForDiscussionAvatar(discussion)
+    return tooltipForDiscussionAvatar(discussion, "DiscussionListItem-author")
   }
 }
