@@ -102,17 +102,7 @@ export default function () {
       });
     }
   }
-  function refreshWithDiscussion(discussion, includedPosts) {
-    this.stream = new PostStreamState(discussion, includedPosts);
-    const rawNearParam = m.route.param('near');
-    const nearParam = rawNearParam === 'reply' ? 'reply' : parseInt(rawNearParam);
-    this.stream.goToNumber(nearParam || (includedPosts[0]?.number() ?? 0), true).then(() => {
-      this.discussion = discussion;
 
-      app.current.set('discussion', discussion);
-      app.current.set('stream', this.stream);
-    });
-  }
   override(DiscussionPage.prototype, 'pageContent', extendDiscussionPagePageContent);
 
   override(DiscussionPage.prototype, 'hero', function () {
