@@ -3,16 +3,14 @@
 namespace Datlechin\TagPasswords;
 
 use Datlechin\TagPasswords\Api\Controller\AuthController;
-use Datlechin\TagPasswords\Listener\AddDiscussionAttributes;
-use Datlechin\TagPasswords\Listener\AddPostAttributes;
-use Datlechin\TagPasswords\Listener\AddTagAttributes;
-use Datlechin\TagPasswords\Listener\SavePasswordToDatabase;
-use Flarum\Api\Serializer\BasicDiscussionSerializer;
-use Flarum\Api\Serializer\BasicPostSerializer;
+use Datlechin\TagPasswords\Api\DiscussionResourceFields;
+use Datlechin\TagPasswords\Api\PostResourceFields;
+use Datlechin\TagPasswords\Api\TagResourceFields;
+use Flarum\Api\Resource\DiscussionResource;
+use Flarum\Api\Resource\PostResource;
 use Flarum\Discussion\Discussion;
 use Flarum\Extend;
-use Flarum\Tags\Api\Serializer\TagSerializer;
-use Flarum\Tags\Event\Saving;
+use Flarum\Tags\Api\Resource\TagResource;
 use Flarum\Tags\Tag;
 
 return [
@@ -25,17 +23,18 @@ return [
 
     new Extend\Locales(__DIR__ . '/locale'),
 
-    (new Extend\Event())
-        ->listen(Saving::class, SavePasswordToDatabase::class),
+    (new Extend\ApiResource(TagResource::class))
+        ->fields(TagResourceFields::class),
 
-    (new Extend\ApiSerializer(TagSerializer::class))
-        ->attributes(AddTagAttributes::class),
+    (new Extend\ApiResource(DiscussionResource::class))
+        ->fields(DiscussionResourceFields::class)
+        ->field('slug', [DiscussionResourceFields::class, 'slug'])
+        ->field('title', [DiscussionResourceFields::class, 'title']),
 
-    (new Extend\ApiSerializer(BasicDiscussionSerializer::class))
-        ->attributes(AddDiscussionAttributes::class),
-
-    (new Extend\ApiSerializer(BasicPostSerializer::class))
-        ->attributes(AddPostAttributes::class),
+    (new Extend\ApiResource(PostResource::class))
+        ->fields(PostResourceFields::class)
+        ->field('content', [PostResourceFields::class, 'content'])
+        ->field('contentHtml', [PostResourceFields::class, 'contentHtml']),
 
     (new Extend\Policy())
         ->modelPolicy(Discussion::class, Policy\DiscussionPolicy::class)
