@@ -13,6 +13,7 @@ jobs:
       enable_bundlewatch: false
       enable_prettier: true
       enable_typescript: false
+      node_version: 18
 
       frontend_directory: ./js
       main_git_branch: main

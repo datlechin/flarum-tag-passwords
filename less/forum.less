@@ -1,133 +1,202 @@
+// ============================================
+// Tag Protection Hero (Index page lock form)
+// ============================================
+.TagProtectionHero {
+  text-align: center;
+  padding: 60px 20px 40px;
+
+  &-icon {
+    .icon {
+      font-size: 64px;
+      color: var(--muted-more-color);
+      margin-bottom: 16px;
+    }
+  }
+
+  &-description {
+    color: var(--muted-color);
+    font-size: 16px;
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+
+  &-input {
+    margin-bottom: 16px;
+
+    .FormControl {
+      width: 260px;
+      margin: 0 auto;
+      display: block;
+      text-align: center;
+
+      &.invalid {
+        border-color: var(--error-color, #e74c3c);
+        animation: shake 0.5s linear;
+      }
+    }
+  }
+
+  &-action {
+    margin-top: 8px;
+  }
+}
+
+// ============================================
+// Protected Discussion Hero (Discussion page)
+// ============================================
+.ProtectedDiscussionHero {
+  text-align: center;
+  padding: 60px 20px 40px;
+
+  &-content {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  &-icon {
+    .icon {
+      font-size: 64px;
+      color: var(--muted-more-color);
+      margin-bottom: 16px;
+    }
+  }
+
+  &-tags {
+    margin-top: 16px;
+
+    .TagLabel {
+      margin: 0 2px;
+    }
+  }
+
+  &-forms {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .FormControl {
+      background-color: var(--body-bg);
+      border: 2px solid var(--muted-more-color);
+
+      &:focus {
+        border-color: var(--primary-color);
+      }
+    }
+  }
+
+  &-form {
+    margin-bottom: 20px;
+
+    &--unlocked {
+      .ProtectedDiscussionHero-formLabel {
+        color: var(--control-success-bg, #27ae60);
+      }
+    }
+  }
+
+  &-description {
+    color: var(--muted-color);
+    font-size: 16px;
+    margin: 0 0 24px;
+    line-height: 1.5;
+
+    &--invalid {
+      color: var(--error-color, #e74c3c);
+      animation: shake 0.5s linear;
+    }
+  }
+
+  &-tagName {
+    font-weight: bold;
+  }
+
+  &-formLabel {
+    font-size: 14px;
+    color: var(--muted-color);
+    margin: 0 0 8px;
+
+    .icon {
+      margin-right: 4px;
+    }
+  }
+}
+
+// ============================================
+// Protection info in PostsUserPage
+// ============================================
 .PostsUserPage-main {
-    display: inline-block;
-    width: 100%;
-    padding: 12px 0
+  display: inline-block;
+  width: 100%;
+  padding: 12px 0;
 }
 
 .PostsUserPage-title {
-    margin: 0 0 3px;
-    line-height: 1.3;
-    color: var(--heading-color);
-    font-size: 16px;
-    font-weight: normal;
-    overflow: hidden;
-    text-overflow: ellipsis
+  margin: 0 0 3px;
+  line-height: 1.3;
+  color: var(--heading-color);
+  font-size: 16px;
+  font-weight: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .PostsUserPage-info {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    font-size: 11px;
-    color: var(--muted-more-color)
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 11px;
+  color: var(--muted-more-color);
 }
 
-.TagPasswordRequired {
-  text-align: center;
-
-  h3 {
-    color: @muted-more-color;
-    font-weight: normal;
-
-    &:before {
-      .fa();
-      content: @fa-var-lock;
-      display: block;
-      font-size: 80px;
-      margin-bottom: 10px;
-    }
-  }
-
-  .FormControl {
-    width: 200px;
-    display: inline;
-
-    &.invalid {
-      animation: shake .5s linear;
-    }
-  }
-}
-
-.TagGroupRequired {
-  text-align: center;
-
-  h3 {
-    color: @muted-more-color;
-    font-weight: normal;
-
-    &:before {
-      .fa();
-      content: @fa-var-user-lock ;
-      display: block;
-      font-size: 80px;
-      margin-bottom: 10px;
-    }
-  }
-
-  .FormControl {
-    width: 200px;
-    display: inline;
-
-    &.invalid {
-      animation: shake .5s linear;
-    }
-  }
-}
-
+// ============================================
+// Sidebar tag lock/unlock icons
+// ============================================
 .TagLinkButton {
-  .fa-lock {
-    margin-left: 10px;
-  }
-  .fa-unlock {
-    margin-left: 10px;
-  }
+  .fa-lock,
+  .fa-unlock,
   .fa-user-lock {
     margin-left: 10px;
   }
 }
 
+// Hidden tags in sidebar
 .hiddenTag {
   visibility: hidden;
   display: none !important;
   max-height: 0;
 }
 
-.TagsPagePasswordProtection {
+// ============================================
+// Tags page protection overlay on tag tiles
+// ============================================
+.TagsPageProtection {
   text-align: center;
 
   &:before {
-    .fa();
-    content: @fa-var-lock ;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    margin: auto;
     font-size: 80px;
     display: flex;
     opacity: 0.3;
-    color: black;
+    color: var(--body-color);
+  }
+
+  &--password:before {
+    content: '\f023';
+  }
+
+  &--group:before {
+    content: '\f502';
   }
 }
 
-.TagsPageGroupProtection {
-  text-align: center;
-
-  &:before {
-    .fa();
-    content: @fa-var-user-lock ;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: auto;
-    font-size: 80px;
-    display: flex;
-    opacity: 0.3;
-    color: black;
-  }
-}
-
+// ============================================
+// Shake animation for invalid password
+// ============================================
 @keyframes shake {
   8%, 41% {
     transform: translateX(-10px);

@@ -2,36 +2,34 @@
 
 namespace Datlechin\TagPasswords\Api\Controller;
 
-use Exception;
-use Flarum\Api\Controller\AbstractCreateController;
+use Flarum\Foundation\ValidationException;
 use Flarum\Http\RequestUtil;
-use Flarum\Tags\Api\Serializer\TagSerializer;
 use Flarum\Tags\TagRepository;
 use Flarum\User\User;
 use Illuminate\Support\Arr;
+use Laminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Tobscure\JsonApi\Document;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class AuthController extends AbstractCreateController
+class AuthController implements RequestHandlerInterface
 {
-    public $serializer = TagSerializer::class;
-
     public function __construct(protected TagRepository $tags) {}
 
-    protected function data(ServerRequestInterface $request, Document $document)
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $actor = RequestUtil::getActor($request);
         $data = Arr::get($request->getParsedBody(), 'data', []);
 
         $tag = $this->tags->findOrFail($data['id'], $actor);
 
-        if ($tag->password && $tag->password !== $data['password']) {
-            throw new Exception('Password is incorrect');
+        if ($tag->password && $tag->password !== ($data['password'] ?? '')) {
+            throw new ValidationException(['password' => 'Password is incorrect']);
         }
 
         if ($tag->protected_groups) {
-            if (! $this->hasGroup($actor, json_decode($tag->protected_groups))) {
-                throw new Exception('Access Denied for Tag Access "' . $tag->name . '".');
+            if (! $this->hasGroup($actor, json_decode($tag->protected_groups, true))) {
+                throw new ValidationException(['group' => 'Access Denied for Tag Access "' . $tag->name . '".']);
             }
         }
 
@@ -40,18 +38,17 @@ class AuthController extends AbstractCreateController
             $state->is_unlocked = true;
             $state->save();
         }
+
+        return new JsonResponse(['success' => true]);
     }
 
-    /**
-     * Check whether the user has a permission that is based on their groups.
-     */
-    public function hasGroup(User $actor, array $protectedGroups): bool
+    protected function hasGroup(User $actor, array $protectedGroups): bool
     {
+        $protectedGroupIds = array_column($protectedGroups, 'id');
+
         foreach ($actor->groups as $group) {
-            foreach ($protectedGroups as &$protectedGroup) {
-                if ($group->id == $protectedGroup->id) {
-                    return true;
-                }
+            if (in_array((int) $group->id, $protectedGroupIds, true)) {
+                return true;
             }
         }
 
